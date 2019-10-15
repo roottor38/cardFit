@@ -43,6 +43,12 @@
 			<artifactId>spring-boot-starter-tomcat</artifactId>
 			<scope>provided</scope>
 		</dependency>
+      <dependency>
+         <groupId>org.eclipse.jdt.core.compiler</groupId>
+         <artifactId>ecj</artifactId>
+         <version>4.6.1</version>
+         <scope>provided</scope>
+      </dependency>
 
 		<!-- JSP -->
 		<dependency>
@@ -61,6 +67,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		      <dependency>
+         <groupId>org.webjars</groupId>
+         <artifactId>bootstrap</artifactId>
+         <version>3.3.7</version>
+      </dependency>
 
 		<dependency>
 			<groupId>com.jslsolucoes</groupId>
@@ -89,5 +101,6 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 
 </project>
