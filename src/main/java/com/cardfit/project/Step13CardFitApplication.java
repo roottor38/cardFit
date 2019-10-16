@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.cardfit.project;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -6,14 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-@EnableAutoConfiguration (exclude={DataSourceAutoConfiguration.class})
+
 @SpringBootApplication
-@ComponentScan("cardfit.controller")
-public class CardFitApplication {
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+@ComponentScan({"com.cardfit.project.controller", "com.cardfit.project.config", "com.cardfit.project.service"})
+public class Step13CardFitApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CardFitApplication.class, args);
-		
+		SpringApplication.run(Step13CardFitApplication.class, args);
 	}
 
 }
