@@ -105,13 +105,13 @@
 											<div class="input-wrap">
 												<select
 													class="form-control form-control-block search-input  border-0 px-4"
-													name="bankName">
+													name="bankname">
 													<option value="신한은행">신한은행</option>
 													<option value="우리은행">우리은행</option>
 													<option value="국민은행">국민은행</option>
 												</select> <br> <input type="text"
 													class="form-control form-control-block search-input  border-0 px-4"
-													name="cardName" placeholder="카드 이름을 입력해주세요">
+													name="cardname" placeholder="카드 이름을 입력해주세요">
 											</div>
 										</div>
 									</div>
@@ -133,8 +133,8 @@
 		<br>
 		<br>
 
- <c:choose>
-            <c:when test="${empty card }">
+ 		<c:choose>
+            <c:when test="${empty card}">
             <tr>
                <td colspan="5">
                   <p align="center">
@@ -144,21 +144,30 @@
             </tr>
          </c:when>
          <c:otherwise>
-      <br><br><br>
+         <c:forEach items="${card}" var="card">
+         
            <div class="container-fluid">
            <div class="row">
              <div class="col-md-15 mx-auto text-center mb-10 section-heading">
 
+         <br><hr><br>
+         
+        <table frame="void">
+	     <td>
+	     <img src="images/${bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	     </td>
+         <td>
+         
          <table class="table table-bordered">
             
             
             <tr>
                 <td>은행명 </td>
-                <td colspan="2">${card.bankName}</td>
+                <td colspan="2">${bankname}</td>
             </tr>
             <tr>
                 <td>카드이름 </td>
-                <td colspan="2">${card.cardName}</td>
+                <td colspan="2">${card.cardname}</td>
             </tr>
             
             <tr>
@@ -169,16 +178,41 @@
             <tr>
                 <td rowspan="18">혜택 </td>
                 <tr>
-                <td><textarea cols="60" rows="6" placeholder="영화혜택 " name="movie" class="form-control"></textarea></td>
+                <td colspan="2">
+                <c:if test="${card.benefit.movie != null}">
+                ${card.benefit.movie}<br>
+                </c:if>
+                <c:if test="${card.benefit.cafe != null}">
+                ${card.benefit.cafe}<br>
+                </c:if>
+                <c:if test="${card.benefit.offshop != null}">
+                ${card.benefit.offshop}<br>
+                </c:if>
+                <c:if test="${card.benefit.onshop != null}">
+                ${card.benefit.onshop}<br>
+                </c:if>
+                <c:if test="${card.benefit.telecom != null}">
+                ${card.benefit.telecom}<br>
+                </c:if>
+                <c:if test="${card.benefit.transportation != null}">
+                ${card.benefit.transportation}<br>
+                </c:if>
+                <c:if test="${card.benefit.food != null}">
+                ${card.benefit.food}<br>
+                </c:if>
+                <c:if test="${card.benefit.others != null}">
+                ${card.benefit.others}<br>
+                </c:if>
+                </td>
                 </tr>
-                
- 
-                
-
-</table>
+			</table>
+		</td>
+         </table>
+         <br><hr><br>
 </div>
 </div>
 </div>
+         </c:forEach>
   <br><br><br>
 
             </c:otherwise>

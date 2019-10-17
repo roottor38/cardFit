@@ -1,29 +1,18 @@
 package com.cardfit.project.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.http.HttpHost;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.script.ScriptType;
-import org.elasticsearch.script.mustache.MultiSearchTemplateRequest;
-import org.elasticsearch.script.mustache.MultiSearchTemplateResponse;
-import org.elasticsearch.script.mustache.MultiSearchTemplateResponse.Item;
-import org.elasticsearch.script.mustache.SearchTemplateRequest;
-import org.elasticsearch.script.mustache.SearchTemplateResponse;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -41,7 +30,7 @@ public class CardService {
 	private ELConfiguration elConfig;
 
 	// 내 카드검색
-	public JSONArray cardNameSearch(String fieldName, String queryTerm) {
+	public JSONArray cardnameSearch(String fieldName, String queryTerm) {
 		RestHighLevelClient client = elConfig.clientConnection();
 		SearchRequest searchRequest = new SearchRequest();
 		SearchResponse searchResponse = new SearchResponse();
@@ -116,5 +105,38 @@ public class CardService {
 
 			return result;
 		}
+		
+		public JSONArray createCard(String bankname, String cardname, String condition, String movie, String cafe, String transportation, String telecom, String offshop, String onshop, String food, String others ) {
+		      RestHighLevelClient client = elConfig.clientConnection();
+		      JSONArray result = new JSONArray();
+		      try {
+		            String json= 
+		                  "{"+
+		                     "\"bankname\" : "+ "\""+bankname+"\","+
+		                     "\"cardname\" : "+ "\""+cardname+"\","+
+		                     "\"condition\" : "+ "\""+condition+"\","+
+		                     "\"benefit\" : "+
+		                     "{"+
+		                        "\"movie\" : "+ "\""+movie+"\","+
+		                        "\"cafe\" : "+ "\""+cafe+"\","+
+		                        "\"transportation\" : "+ "\""+transportation+"\","+
+		                        "\"telecom\" : "+ "\""+telecom+"\","+
+		                        "\"offshop\" : "+ "\""+offshop+"\","+
+		                        "\"onshop\" : "+ "\""+onshop+"\","+
+		                        "\"food\" : "+ "\""+food+"\","+
+		                        "\"others\" : "+ "\""+others+"\""+
+		                  "}"+
+		                  "}";
+		            IndexRequest request = new IndexRequest("shinhan","_doc");
+		            request.source(json, XContentType.JSON); 
+		            IndexResponse response = client.index(request, RequestOptions.DEFAULT);
+		            result.add(response);
+		         
+		      } catch (IOException e) {
+		         e.printStackTrace();
+		      }
+		      return result;
+		   }
+		
 
 }

@@ -14,5 +14,4 @@ public class ELConfiguration {
 		RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost("192.168.22.55", 9200, "http")));
 		return client;
 	}
-
 }
