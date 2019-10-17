@@ -1,6 +1,7 @@
 package com.cardfit.project.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,8 +39,9 @@ public class CardService {
 
 	@Autowired
 	private ELConfiguration elConfig;
+
 	// 내 카드검색
-	public SearchHits cardNameSearch(String fieldName, String queryTerm) {
+	public JSONArray cardNameSearch(String fieldName, String queryTerm) {
 		RestHighLevelClient client = elConfig.clientConnection();
 		SearchRequest searchRequest = new SearchRequest();
 		SearchResponse searchResponse = new SearchResponse();
@@ -50,36 +52,69 @@ public class CardService {
 			searchRequest.source(searchSourceBuilder);
 			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
-			
+
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
 			for (SearchHit hit : searchHits) {
-				System.out.println(hit.getSourceAsString());
-				System.out.println(hit.getId());
+				result.add(hit.getSourceAsMap());
 			}
-		}catch (IOException e) {
+		} catch (IOException e) {
 			System.out.println("발생된 예외 : " + e.getMessage());
-			//e.printStackTrace();
+			e.printStackTrace();
 		}
-		return searchResponse.getHits();
+		return result;
+	}
+
+	// 카드 추천(체크박스)
+	public JSONArray checkSearch(String[] keys) {
+		RestHighLevelClient client = elConfig.clientConnection();
+		JSONArray result = new JSONArray();
+		SearchRequest searchRequest = new SearchRequest();
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		try {
+			for (String key : keys) {
+				searchSourceBuilder.query(QueryBuilders.wildcardQuery(key, "*"));
+			}
+
+			searchRequest.source(searchSourceBuilder);
+			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			client.close();
+
+			SearchHit[] searchHits = searchResponse.getHits().getHits();
+			for (SearchHit hit : searchHits) {
+				result.add(hit.getSourceAsMap());
+
+			}
+		} catch (IOException e) {
+			System.out.println("발생된 예외 : " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return result;
 	}
 	
-	//카드 추천(체크박스)
-//	public static SearchHits checkSearch() throws IOException {
-//		RestHighLevelClient client = createConnection();
-//		SearchRequest searchRequest = new SearchRequest();
-//		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//		searchSourceBuilder.query(QueryBuilders.wildcardQuery("benefit.cafe", "*"));
-//		searchSourceBuilder.query(QueryBuilders.wildcardQuery("benefit.onshop", "*"));
-//		searchRequest.source(searchSourceBuilder);
-//		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//		client.close();
-//		SearchHit[] searchHits = searchResponse.getHits().getHits();
-//		for (SearchHit hit : searchHits) {
-//			System.out.println(hit.getSourceAsString());
-//			System.out.println(hit.getId());
-//
-//		}
-//		return searchResponse.getHits();
-//	}
+	// 카드 추천(체크박스)
+		public JSONArray keywordSearch(String keys) {
+			RestHighLevelClient client = elConfig.clientConnection();
+			JSONArray result = new JSONArray();
+			SearchRequest searchRequest = new SearchRequest();
+			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+			try {
+				searchSourceBuilder.query(QueryBuilders.wildcardQuery("*", "이디야"));
+				searchRequest.source(searchSourceBuilder);
+				SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+				client.close();
+
+				SearchHit[] searchHits = searchResponse.getHits().getHits();
+				for (SearchHit hit : searchHits) {
+					result.add(hit.getSourceAsMap());
+
+				}
+			} catch (IOException e) {
+				System.out.println("발생된 예외 : " + e.getMessage());
+				e.printStackTrace();
+			}
+
+			return result;
+		}
 
 }

@@ -10,10 +10,10 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @ComponentScan({"com.cardfit.project.controller", "com.cardfit.project.config", "com.cardfit.project.service"})
-public class Step13CardFitApplication {
+public class CardFitApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Step13CardFitApplication.class, args);
+		SpringApplication.run(CardFitApplication.class, args);
 	}
 
 }
