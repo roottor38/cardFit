@@ -133,87 +133,57 @@
 		<br>
 		<br>
 
-		<table align="center" border="0" cellpadding="5" cellspacing="2 width=" 100%" bordercolordark="white" bordercolorlight="black">
-			<c:choose>
-				<c:when test="${empty card }">
-				<tr>
-					<td colspan="5">
-						<p align="center">
-							<b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-						</p>
-					</td>
-				</tr>
-			</c:when>
-			<c:otherwise>
-				<br>
-				<hr>
-				<br>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">은행명</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.bankName} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">카드이름</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.cardName} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">이용실적</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.condition}</span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">혜택</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.benefit}</span>
-						</p>
-					</td>
-				</tr>
-				</c:otherwise>
-		</c:choose>
+ <c:choose>
+            <c:when test="${empty card }">
+            <tr>
+               <td colspan="5">
+                  <p align="center">
+                     <b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
+                  </p>
+               </td>
+            </tr>
+         </c:when>
+         <c:otherwise>
+      <br><br><br>
+           <div class="container-fluid">
+           <div class="row">
+             <div class="col-md-15 mx-auto text-center mb-10 section-heading">
 
+         <table class="table table-bordered">
+            
+            
+            <tr>
+                <td>은행명 </td>
+                <td colspan="2">${card.bankName}</td>
+            </tr>
+            <tr>
+                <td>카드이름 </td>
+                <td colspan="2">${card.cardName}</td>
+            </tr>
+            
+            <tr>
+                <td>이용조건</td>
+                <td colspan="2">${card.condition}</td>
+            </tr>
+            <tr>
+            <tr>
+                <td rowspan="18">혜택 </td>
+                <tr>
+                <td><textarea cols="60" rows="6" placeholder="영화혜택 " name="movie" class="form-control"></textarea></td>
+                </tr>
+                
+ 
+                
 
-			<tr>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-					</p>
-				</td>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-					</p>
-				</td>
-			</tr>
+</table>
+</div>
+</div>
+</div>
+  <br><br><br>
 
-		</table>
+            </c:otherwise>
+      </c:choose>
+
 
 
 		<br>

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,9 +25,6 @@
 
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/mediaelementplayer.min.css">
-
-
-
 <link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">
 
 <link rel="stylesheet" href="css/aos.css">
@@ -35,17 +32,21 @@
 <link rel="stylesheet" href="css/style.css">
 
 </head>
+<script type="text/javascript">
 
-<style type="text/css">
-input[type=checkbox] {
-	width: 20px;
-	height: 20px;
-}
+	function deleteCard(bankName, cardName){
+		alert(cardName);
+	      axios.get("http://localhost:8088/deleteCard?bankName="+bankName+"&cardName="+cardName)
+	      .then(resData => {
+	                 console.log(resData);
+	      }).catch(error => {
+					console.log("비정상 응답 ", error);
+	      });
+	      alert("카드 삭제 완료");
+		
+	}
 
-#my1 {
-	margin: 130px 0px 0px 0px;
-}
-</style>
+</script>
 <body>
 
 	<div class="site-wrap">
@@ -58,46 +59,32 @@ input[type=checkbox] {
 			</div>
 			<div class="site-mobile-menu-body"></div>
 		</div>
+		<!-- .site-mobile-menu -->
 
 
-		<div class="site-navbar-wrap js-site-navbar bg-white">
-			<div class="container">
-				<div class="site-navbar bg-light">
-					<div class="py-1">
-						<div class="row align-items-center">
-							<div class="col-2">
-								<div class="mb-0 site-logo">
-									<a href="index.html">Card<strong class="font-weight-bold">Fit</strong>
-									</a>
-								</div>
-							</div>
-							<div class="col-10">
-								<nav class="site-navigation text-right" role="navigation">
-									<div class="container">
-										<div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3">
-											<a href="#"
-												class="site-menu-toggle js-menu-toggle text-black"><span
-												class="icon-menu h3"></span></a>
-										</div>
-
-										<ul class="site-menu js-clone-nav d-none d-lg-block">
-											<li><a href="about.html">CardFit 소개</a></li>
-											<li><a href="myCardBenefit">내 카드 혜택보기</a></li>
-											<li class="has-children"><a>카드 추천받기</a>
-												<ul class="dropdown arrow-top">
-													<li><a href="/keyword">키워드로 추천받기</a></li>
-													<li><a href="/option">옵션으로 추천받기</a></li>
-												</ul></li>
-											<li><a href="contact.html">문의하기</a></li>
-										</ul>
-									</div>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+    <div class="site-navbar-wrap js-site-navbar bg-white">
+      <div class="container">
+        <div class="site-navbar bg-light">
+          <div class="py-1">
+            <div class="row align-items-center">
+              <div class="col-2">
+                <div class="mb-0 site-logo"><a href="admin.html">Admin<br> Card<strong class="font-weight-bold">Fit</strong></a></div>
+              </div>
+              <div class="col-10">
+                <nav class="site-navigation text-right" role="navigation">
+                  <div class="container">
+                    <ul class="site-menu js-clone-nav d-none d-lg-block">
+                      
+                      <li><a href="/createCard">카드추가</a></li>
+                    </ul>
+                  </div>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 		<div style="height: 113px;"></div>
 
@@ -107,70 +94,55 @@ input[type=checkbox] {
 			<div class="container">
 				<div class="row align-items-center">
 					<div class="col-12" data-aos="fade">
-						<h2 style="color: white">옵션으로 추천받기</h2>
+						<h2 style="color: white">카드 검색하기</h2>
 						<br>
-						
-						<form action="/option" method="post" style="color:white">
+						<form action="/myCardBenefit" method="post">
 							<div class="row mb-3">
 								<div class="col-md-9">
 									<div class="row">
-										<table style="font-size: 25px;">
-											<tr>
-												<td>
-												<input type="checkbox" id="movie" name="movie" value="movie">영화<br>
-												</td>
-												<td>
-												<input type="checkbox" id="telecome" name="telecome" value="telecome">통신사&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-												</td>
-												<td>
-												<input type="checkbox" id="traffic" name="traffic" value="traffic">대중교통 &nbsp;&nbsp;&nbsp; <br>
-												</td>
-												<td>
-												<input type="checkbox" id="offshop" name ="offshop" value="offshop">쇼핑 <br>
-												</td>
-											</tr>
-											<tr>
-												<td>
-												<input type="checkbox" id="onshop" name="onshop" value="onshop">온라인쇼핑 &nbsp;&nbsp; <br>
-												</td>
-												<td>
-												<input type="checkbox" id="food" name="food" value="food">외식<br>
-												</td>
-												<td>
-												<input type="checkbox" id="cafe" name="cafe" value="cafe">카페<br>
-												</td>
-												<td>
-												<input type="checkbox" id="others" name="others" value="others">기타<br>
-												</td>
-											</tr>
-										</table>
+										<div class="col-md-6 mb-3 mb-md-0">
+											<div class="input-wrap">
+												<select
+													class="form-control form-control-block search-input  border-0 px-4"
+													name="bankName">
+													<option value="신한은행">신한은행</option>
+													<option value="우리은행">우리은행</option>
+													<option value="국민은행">국민은행</option>
+												</select> <br> <input type="text"
+													class="form-control form-control-block search-input  border-0 px-4"
+													name="cardName" placeholder="카드 이름을 입력해주세요">
+											</div>
+										</div>
 									</div>
 								</div>
-								
-								<div id="my1" class="col-md-3">
-								<input type="submit" class="btn btn-search btn-primary btn-block" value="Search">
-								</div>
-								
-							</div>
 
+								<div class="col-md-3">
+									<input type="submit"
+										class="btn btn-search btn-primary btn-block" value="Search">
+								</div>
+							</div>
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 
-
-
-
-
-	<br>
+		<br>
 		<br>
 		<br>
 
 		<table align="center" border="0" cellpadding="5" cellspacing="2 width=" 100%" bordercolordark="white" bordercolorlight="black">
 			<c:choose>
-			<c:when test="${not empty data}">
-			<c:forEach items="${data}" var="card">
+				<c:when test="${empty card }">
+				<tr>
+					<td colspan="5">
+						<p align="center">
+							<b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
+						</p>
+					</td>
+				</tr>
+			</c:when>
+			<c:otherwise>
 				<br>
 				<hr>
 				<br>
@@ -222,20 +194,9 @@ input[type=checkbox] {
 						</p>
 					</td>
 				</tr>
-				</c:forEach>
-			</c:when>
-				
-								<c:otherwise>
-				<tr>
-					<td colspan="5">
-						<p align="center">
-							<b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-						</p>
-					</td>
-				</tr>
 				</c:otherwise>
 		</c:choose>
-
+		
 
 			<tr>
 				<td bgcolor="">
@@ -251,14 +212,22 @@ input[type=checkbox] {
 			</tr>
 
 		</table>
+		
+		
+					<p align="right">
+						<a href="updateCard/${card.bankName}/${card.cardName}"><span style="font-size: 15pt;">수정하기</span></a>
+					</p>
 
+					
+					<p align="right">
+						<a  href="deleteCard/${card.bankName}/${card.cardName}"><span style="font-size: 15pt;">삭제하기</span></a>
+					</p>
+
+		
 
 		<br>
 		<br>
 		<br>
-
-
-
 
 
 		<footer class="site-footer">
@@ -322,8 +291,8 @@ input[type=checkbox] {
 						<p>
 							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 							Copyright &copy;
-							<!-- <script data-cfasync="false"
-								src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script> -->
+							<script data-cfasync="false"
+								src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
 							<script>document.write(new Date().getFullYear());</script>
 							All Rights Reserved | This template is made with <i
 								class="icon-heart text-warning" aria-hidden="true"></i> by <a
@@ -384,14 +353,14 @@ input[type=checkbox] {
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
       var placeSearch, autocomplete;
-       var componentForm = {
+      var componentForm = {
         street_number: 'short_name',
         route: 'long_name',
         locality: 'long_name',
         administrative_area_level_1: 'short_name',
         country: 'long_name',
         postal_code: 'short_name'
-      }; 
+      };
 
       function initAutocomplete() {
         // Create the autocomplete object, restricting the search to geographical
