@@ -58,8 +58,17 @@ public class CardController {
 			System.out.println(bankName + "      " + cardName);
 			JSONArray result = service.cardNameSearch("cardname", cardName);
 			model.addAttribute("card", result);
+			System.out.println(result);
 			return "myCardBenefit";
 		}
+	}
+	
+	@GetMapping("/test")
+	public JSONArray test() throws IOException {
+		JSONArray result = service.createCard("test", "test", "test", "test", "test", "test", "test","test","test","test","test");
+		System.out.println("con : " + result);
+		
+		return result;
 	}
 	
 	

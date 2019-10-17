@@ -154,22 +154,22 @@
             
             <tr>
                 <td>은행명 </td>
-                <td colspan="2">${card.bankName}</td>
+                <td colspan="2">${card[0].condition}</td>
             </tr>
             <tr>
                 <td>카드이름 </td>
-                <td colspan="2">${card.cardName}</td>
+                <td colspan="2">${card[0].cardname}</td>
             </tr>
             
             <tr>
                 <td>이용조건</td>
-                <td colspan="2">${card.condition}</td>
+                <td colspan="2">${card[0].condition}</td>
             </tr>
             <tr>
             <tr>
                 <td rowspan="18">혜택 </td>
                 <tr>
-                <td><textarea cols="60" rows="6" placeholder="영화혜택 " name="movie" class="form-control"></textarea></td>
+                <td><textarea cols="60" rows="6" placeholder="영화혜택 " name="movie" class="form-control">${card[0].benefit.cafe}</textarea></td>
                 </tr>
                 
  
