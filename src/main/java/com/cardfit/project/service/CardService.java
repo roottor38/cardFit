@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.DocWriteRequest;
 import org.elasticsearch.action.DocWriteResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
@@ -68,6 +69,7 @@ public class CardService {
 			for (String key : keys) {
 				searchSourceBuilder.query(QueryBuilders.wildcardQuery(key, "*"));
 			}
+
 			searchRequest.source(searchSourceBuilder);
 			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
@@ -155,6 +157,7 @@ public class CardService {
          					"\"others\" : "+ "\""+others+"\""+
 						"}"+
             		"}";
+			
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(cardName, queryTerm));
 			searchRequest.source(searchSourceBuilder);
