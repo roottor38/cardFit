@@ -182,7 +182,7 @@ input[type=checkbox] {
 					</td>
 					<td bgcolor="">
 						<p align="center">
-							<span style="font-size: 13pt;"> ${card.bankName} </span>
+							<span style="font-size: 13pt;"> ${card.bankname} </span>
 						</p>
 					</td>
 				</tr>
@@ -194,7 +194,7 @@ input[type=checkbox] {
 					</td>
 					<td bgcolor="">
 						<p align="center">
-							<span style="font-size: 13pt;"> ${card.cardName} </span>
+							<span style="font-size: 13pt;"> ${card.cardname} </span>
 						</p>
 					</td>
 				</tr>

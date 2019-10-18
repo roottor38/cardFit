@@ -23,9 +23,9 @@
 //	}
 //
 //	@PostMapping("/myCardBenefit")
-//	public String myCardBenefit(@RequestParam(value = "bankName") String bankName,
-//			@RequestParam(value = "cardName") String cardName, Model model) {
-//		if (cardName == null || cardName.length() == 0 || cardName.equals("")) {
+//	public String myCardBenefit(@RequestParam(value = "bankname") String bankname,
+//			@RequestParam(value = "cardname") String cardname, Model model) {
+//		if (cardname == null || cardname.length() == 0 || cardname.equals("")) {
 //			
 //			return "myCardBenefit";
 //		} else {
@@ -68,17 +68,17 @@
 //	}
 //
 //	@PostMapping("/cardControl")
-//	public String cardControl(@RequestParam(value = "bankName") String bankName,
-//			@RequestParam(value = "cardName") String cardName, Model model) {
+//	public String cardControl(@RequestParam(value = "bankname") String bankname,
+//			@RequestParam(value = "cardname") String cardname, Model model) {
 //		//관리자 카드 검색 로직( 위 내카드 혜택보기랑 같은 로직)
 //		
 //		model.addAttribute("card", //객체);
 //		return "cardControl";
 //	}
 //
-//	@GetMapping("/deleteCard/{bankName}/{cardName}")
-//	public String deleteCard(@PathVariable(value = "bankName") String bankName,
-//			@PathVariable(value = "cardName") String cardName) {
+//	@GetMapping("/deleteCard/{bankname}/{cardname}")
+//	public String deleteCard(@PathVariable(value = "bankname") String bankname,
+//			@PathVariable(value = "cardname") String cardname) {
 //		//관리자 은행명하고 카드명으로 카드 삭제 로직
 //		
 //		
@@ -91,8 +91,8 @@
 //	}
 //	
 //	@PostMapping("/createCard")
-//	public String createCard(@RequestParam(value = "bankName") String bankName,
-//			@RequestParam(value = "cardName") String cardName,
+//	public String createCard(@RequestParam(value = "bankname") String bankname,
+//			@RequestParam(value = "cardname") String cardname,
 //			@RequestParam(value = "condition") String condition,
 //			@RequestParam(value = "benefit") String benefit) {
 //		//관리자 카드 추가 로직
@@ -100,9 +100,9 @@
 //		return "redirect:/admin.html";
 //	}
 //
-//	@RequestMapping("/updateCard/{bankName}/{cardName}")
-//	public String updateCard(@PathVariable(value = "bankName") String bankName,
-//			@PathVariable(value = "cardName") String cardName, Model model) {
+//	@RequestMapping("/updateCard/{bankname}/{cardname}")
+//	public String updateCard(@PathVariable(value = "bankname") String bankname,
+//			@PathVariable(value = "cardname") String cardname, Model model) {
 //		//카드 수정을 위한 은행명하고 카드명으로 값 검색 로직
 //		
 //		
@@ -111,8 +111,8 @@
 //	}
 //	
 //	@PostMapping("/updateCard")
-//	public String updateCard(@RequestParam(value = "bankName") String bankName,
-//			@RequestParam(value = "cardName") String cardName,
+//	public String updateCard(@RequestParam(value = "bankname") String bankname,
+//			@RequestParam(value = "cardname") String cardname,
 //			@RequestParam(value = "condition") String condition,
 //			@RequestParam(value = "benefit") String benefit) {
 //		//관리자 카드 정보 수정 로직

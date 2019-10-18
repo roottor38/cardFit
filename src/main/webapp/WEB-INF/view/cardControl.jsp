@@ -34,9 +34,9 @@
 </head>
 <script type="text/javascript">
 
-	function deleteCard(bankName, cardName){
-		alert(cardName);
-	      axios.get("http://localhost:8088/deleteCard?bankName="+bankName+"&cardName="+cardName)
+	function deleteCard(bankname, cardname){
+		alert(cardname);
+	      axios.get("http://localhost:8088/deleteCard?bankname="+bankname+"&cardname="+cardname)
 	      .then(resData => {
 	                 console.log(resData);
 	      }).catch(error => {
@@ -104,13 +104,13 @@
 											<div class="input-wrap">
 												<select
 													class="form-control form-control-block search-input  border-0 px-4"
-													name="bankName">
+													name="bankname">
 													<option value="신한은행">신한은행</option>
 													<option value="우리은행">우리은행</option>
 													<option value="국민은행">국민은행</option>
 												</select> <br> <input type="text"
 													class="form-control form-control-block search-input  border-0 px-4"
-													name="cardName" placeholder="카드 이름을 입력해주세요">
+													name="cardname" placeholder="카드 이름을 입력해주세요">
 											</div>
 										</div>
 									</div>
@@ -147,6 +147,7 @@
 				<hr>
 				<br>
 				<tr>
+				
 					<td bgcolor="#336699">
 						<p align="center">
 							<font color="white"><b><span style="font-size: 13pt;">은행명</span></b></font>
@@ -154,7 +155,7 @@
 					</td>
 					<td bgcolor="">
 						<p align="center">
-							<span style="font-size: 13pt;"> ${card.bankName} </span>
+							<span style="font-size: 13pt;"> ${card.bankname} </span>
 						</p>
 					</td>
 				</tr>
@@ -166,7 +167,7 @@
 					</td>
 					<td bgcolor="">
 						<p align="center">
-							<span style="font-size: 13pt;"> ${card.cardName} </span>
+							<span style="font-size: 13pt;"> ${card.cardname} </span>
 						</p>
 					</td>
 				</tr>
@@ -215,12 +216,12 @@
 		
 		
 					<p align="right">
-						<a href="updateCard/${card.bankName}/${card.cardName}"><span style="font-size: 15pt;">수정하기</span></a>
+						<a href="updateCard/${card.bankname}/${card.cardname}"><span style="font-size: 15pt;">수정하기</span></a>
 					</p>
 
 					
 					<p align="right">
-						<a  href="deleteCard/${card.bankName}/${card.cardName}"><span style="font-size: 15pt;">삭제하기</span></a>
+						<a  href="deleteCard/${card.bankname}/${card.cardname}"><span style="font-size: 15pt;">삭제하기</span></a>
 					</p>
 
 		

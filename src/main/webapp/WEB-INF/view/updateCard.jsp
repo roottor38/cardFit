@@ -65,11 +65,11 @@
     <tbody>
             <tr>
                 <td>은행 </td>
-                <td colspan="2"><input type="text" placeholder="${card.bankName}" name="bankName" class="form-control"/></td>
+                <td colspan="2"><input type="text" placeholder="${card.bankname}" name="bankname" class="form-control"/></td>
             </tr>
             <tr>
                 <td>카드이름 </td>
-                <td colspan="2"><input type="text" placeholder="${card.cardName}" name="cardName" class="form-control"/></td>
+                <td colspan="2"><input type="text" placeholder="${card.cardname}" name="cardname" class="form-control"/></td>
             </tr>
             <tr>
                 <td>이용조건</td>

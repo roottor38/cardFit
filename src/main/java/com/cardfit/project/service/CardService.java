@@ -8,7 +8,6 @@ import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.action.support.replication.ReplicationResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.common.xcontent.XContentType;
@@ -34,14 +33,16 @@ public class CardService {
 	private ELConfiguration elConfig;
 
 	// 내 카드검색
-	public JSONArray cardNameSearch(String fieldName, String queryTerm) {
+	public JSONArray cardnameSearch(String fieldName, String queryTerm) {
 		RestHighLevelClient client = elConfig.clientConnection();
 		SearchRequest searchRequest = new SearchRequest();
 		SearchResponse searchResponse = new SearchResponse();
 		JSONArray result = new JSONArray();
+		String query = "*"+queryTerm+"*";
 		try {
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(fieldName, queryTerm));
+			//searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(fieldName, queryTerm));
+			searchSourceBuilder.query(QueryBuilders.wildcardQuery(fieldName, query));
 			searchRequest.source(searchSourceBuilder);
 			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
@@ -146,4 +147,5 @@ public class CardService {
 		}
 		return result;
 	}
+
 }
