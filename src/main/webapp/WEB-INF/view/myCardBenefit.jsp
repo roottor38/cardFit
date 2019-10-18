@@ -105,15 +105,6 @@
 											<div class="input-wrap">
 												<input type="text"
 													class="form-control form-control-block search-input  border-0 px-4"
-<<<<<<< HEAD
-													name="bankname">
-													<option value="신한은행">신한은행</option>
-													<option value="우리은행">우리은행</option>
-													<option value="국민은행">국민은행</option>
-												</select> <br> <input type="text"
-													class="form-control form-control-block search-input  border-0 px-4"
-=======
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 													name="cardname" placeholder="카드 이름을 입력해주세요">
 											</div>
 										</div>
@@ -153,19 +144,11 @@
            <div class="row">
              <div class="col-md-15 mx-auto text-center mb-10 section-heading">
 
-<<<<<<< HEAD
-         <br><hr><br>
-         
-        <table frame="void">
-	     <td>
-	     <img src="images/${bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-=======
          <br><br>
          
         <table frame="void">
 	     <td>
 	     <img src="images/${card.bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 	     </td>
          <td>
          
@@ -174,11 +157,7 @@
             
             <tr>
                 <td>은행명 </td>
-<<<<<<< HEAD
-                <td colspan="2">${bankname}</td>
-=======
                 <td colspan="2" width="1100" height="50" >${card.bankname}</td>
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
             </tr>
             <tr>
                 <td>카드이름 </td>
@@ -187,7 +166,7 @@
             
             <tr>
                 <td>이용조건</td>
-                <td colspan="2">${card[0].condition}</td>
+                <td colspan="2">${card.condition}</td>
             </tr>
             <tr>
             <tr>
@@ -337,7 +316,6 @@
 	<script>
       document.addEventListener('DOMContentLoaded', function() {
                 var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
-
                 for (var i = 0; i < total; i++) {
                     new MediaElementPlayer(mediaElements[i], {
                         pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
@@ -357,11 +335,9 @@
 	<script>
       // This example displays an address form, using the autocomplete feature
       // of the Google Places API to help users fill in the information.
-
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
       var placeSearch, autocomplete;
       var componentForm = {
         street_number: 'short_name',
@@ -371,28 +347,23 @@
         country: 'long_name',
         postal_code: 'short_name'
       };
-
       function initAutocomplete() {
         // Create the autocomplete object, restricting the search to geographical
         // location types.
         autocomplete = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
             {types: ['geocode']});
-
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         autocomplete.addListener('place_changed', fillInAddress);
       }
-
       function fillInAddress() {
         // Get the place details from the autocomplete object.
         var place = autocomplete.getPlace();
-
         for (var component in componentForm) {
           document.getElementById(component).value = '';
           document.getElementById(component).disabled = false;
         }
-
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {
@@ -403,7 +374,6 @@
           }
         }
       }
-
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
       function geolocate() {

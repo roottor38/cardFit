@@ -205,93 +205,6 @@
             </c:otherwise>
       </c:choose>
 
-<<<<<<< HEAD
-		<table align="center" border="0" cellpadding="5" cellspacing="2 width=" 100%" bordercolordark="white" bordercolorlight="black">
-			<c:choose>
-			<c:when test="${not empty data}">
-			<c:forEach items="${data}" var="card">
-				<br>
-				<hr>
-				<br>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">은행명</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.bankname} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">카드이름</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.cardname} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">이용실적</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.condition}</span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">혜택</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.benefit}</span>
-						</p>
-					</td>
-				</tr>
-				</c:forEach>
-			</c:when>
-				
-								<c:otherwise>
-				<tr>
-					<td colspan="5">
-						<p align="center">
-							<b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-						</p>
-					</td>
-				</tr>
-				</c:otherwise>
-		</c:choose>
-
-
-			<tr>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-					</p>
-				</td>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-					</p>
-				</td>
-			</tr>
-
-		</table>
-=======
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 
 
 		<br>
@@ -384,7 +297,6 @@
   <script>
       document.addEventListener('DOMContentLoaded', function() {
                 var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
-
                 for (var i = 0; i < total; i++) {
                     new MediaElementPlayer(mediaElements[i], {
                         pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
@@ -404,11 +316,9 @@
     <script>
       // This example displays an address form, using the autocomplete feature
       // of the Google Places API to help users fill in the information.
-
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
       var placeSearch, autocomplete;
       var componentForm = {
         street_number: 'short_name',
@@ -418,28 +328,23 @@
         country: 'long_name',
         postal_code: 'short_name'
       };
-
       function initAutocomplete() {
         // Create the autocomplete object, restricting the search to geographical
         // location types.
         autocomplete = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
             {types: ['geocode']});
-
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         autocomplete.addListener('place_changed', fillInAddress);
       }
-
       function fillInAddress() {
         // Get the place details from the autocomplete object.
         var place = autocomplete.getPlace();
-
         for (var component in componentForm) {
           document.getElementById(component).value = '';
           document.getElementById(component).disabled = false;
         }
-
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {
@@ -450,7 +355,6 @@
           }
         }
       }
-
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
       function geolocate() {

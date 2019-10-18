@@ -32,22 +32,6 @@
 <link rel="stylesheet" href="css/style.css">
 
 </head>
-<<<<<<< HEAD
-<script type="text/javascript">
-
-	function deleteCard(bankname, cardname){
-		alert(cardname);
-	      axios.get("http://localhost:8088/deleteCard?bankname="+bankname+"&cardname="+cardname)
-	      .then(resData => {
-	                 console.log(resData);
-	      }).catch(error => {
-					console.log("비정상 응답 ", error);
-	      });
-	      alert("카드 삭제 완료");
-		
-	}
-=======
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 
 <body>
 
@@ -104,18 +88,7 @@
 									<div class="row">
 										<div class="col-md-6 mb-3 mb-md-0">
 											<div class="input-wrap">
-<<<<<<< HEAD
-												<select
-													class="form-control form-control-block search-input  border-0 px-4"
-													name="bankname">
-													<option value="신한은행">신한은행</option>
-													<option value="우리은행">우리은행</option>
-													<option value="국민은행">국민은행</option>
-												</select> <br> <input type="text"
-													class="form-control form-control-block search-input  border-0 px-4"
-=======
 <input type="text"	class="form-control form-control-block search-input  border-0 px-4"
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 													name="cardname" placeholder="카드 이름을 입력해주세요">
 											</div>
 										</div>
@@ -137,80 +110,6 @@
 		<br>
 		<br>
 
-<<<<<<< HEAD
-		<table align="center" border="0" cellpadding="5" cellspacing="2 width=" 100%" bordercolordark="white" bordercolorlight="black">
-			<c:choose>
-				<c:when test="${empty card }">
-				<tr>
-					<td colspan="5">
-						<p align="center">
-							<b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-						</p>
-					</td>
-				</tr>
-			</c:when>
-			<c:otherwise>
-				<br>
-				<hr>
-				<br>
-				<tr>
-				
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">은행명</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.bankname} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">카드이름</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.cardname} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">이용실적</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.condition}</span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">혜택</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.benefit}</span>
-						</p>
-					</td>
-				</tr>
-				</c:otherwise>
-		</c:choose>
-		
-
-			<tr>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-=======
  		<c:choose>
             <c:when test="${empty card}">
             <tr>
@@ -287,7 +186,6 @@
 			
 								<p align="right">
 						<a href="updateCard/${card.cardname}"><span style="font-size: 15pt;">수정하기</span></a>
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 					</p>
 
 					
@@ -313,18 +211,7 @@
 		<br>
 		
 		
-<<<<<<< HEAD
-					<p align="right">
-						<a href="updateCard/${card.bankname}/${card.cardname}"><span style="font-size: 15pt;">수정하기</span></a>
-					</p>
 
-					
-					<p align="right">
-						<a  href="deleteCard/${card.bankname}/${card.cardname}"><span style="font-size: 15pt;">삭제하기</span></a>
-					</p>
-=======
-
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 
 		
 
@@ -430,7 +317,6 @@
 	<script>
       document.addEventListener('DOMContentLoaded', function() {
                 var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
-
                 for (var i = 0; i < total; i++) {
                     new MediaElementPlayer(mediaElements[i], {
                         pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
@@ -450,11 +336,9 @@
 	<script>
       // This example displays an address form, using the autocomplete feature
       // of the Google Places API to help users fill in the information.
-
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
       var placeSearch, autocomplete;
       var componentForm = {
         street_number: 'short_name',
@@ -464,28 +348,23 @@
         country: 'long_name',
         postal_code: 'short_name'
       };
-
       function initAutocomplete() {
         // Create the autocomplete object, restricting the search to geographical
         // location types.
         autocomplete = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
             {types: ['geocode']});
-
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         autocomplete.addListener('place_changed', fillInAddress);
       }
-
       function fillInAddress() {
         // Get the place details from the autocomplete object.
         var place = autocomplete.getPlace();
-
         for (var component in componentForm) {
           document.getElementById(component).value = '';
           document.getElementById(component).disabled = false;
         }
-
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {
@@ -496,7 +375,6 @@
           }
         }
       }
-
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
       function geolocate() {

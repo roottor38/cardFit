@@ -43,7 +43,6 @@
         display:block;
         width:100%
     }
-
    </style>
   </head>
 
@@ -61,31 +60,6 @@
 <br><br><br>
     
         <form action="/updateCard" method="post" encType="multiplart/form-data">
-<<<<<<< HEAD
-<table class="table table-bordered">
-    <tbody>
-            <tr>
-                <td>은행 </td>
-                <td colspan="2"><input type="text" placeholder="${card.bankname}" name="bankname" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td>카드이름 </td>
-                <td colspan="2"><input type="text" placeholder="${card.cardname}" name="cardname" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td>이용조건</td>
-                <td colspan="2"><input type="text" placeholder="${card.condition}" name="condition" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td rowspan="18">혜택 </td>
-                <tr>
-
-                <td><textarea cols="60" rows="6" placeholder="${card.benefit}" name="benefit" class="form-control"></textarea></td>
-                </tr>
-    </tbody>
-</table>
- <input type="submit" class="btn btn-search btn-primary btn-block" value="update">
-=======
 
         <table frame="void" >
 	     <td>
@@ -147,7 +121,6 @@
 	            </tr>
 			</table>
 		</td>
->>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
  
  </table>
  		<input type="submit" class="btn btn-search btn-primary btn-block" value="update">
@@ -177,7 +150,6 @@
   <script>
       document.addEventListener('DOMContentLoaded', function() {
                 var mediaElements = document.querySelectorAll('video, audio'), total = mediaElements.length;
-
                 for (var i = 0; i < total; i++) {
                     new MediaElementPlayer(mediaElements[i], {
                         pluginPath: 'https://cdn.jsdelivr.net/npm/mediaelement@4.2.7/build/',
@@ -197,11 +169,9 @@
     <script>
       // This example displays an address form, using the autocomplete feature
       // of the Google Places API to help users fill in the information.
-
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
       // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
       var placeSearch, autocomplete;
       var componentForm = {
         street_number: 'short_name',
@@ -211,28 +181,23 @@
         country: 'long_name',
         postal_code: 'short_name'
       };
-
       function initAutocomplete() {
         // Create the autocomplete object, restricting the search to geographical
         // location types.
         autocomplete = new google.maps.places.Autocomplete(
             /** @type {!HTMLInputElement} */(document.getElementById('autocomplete')),
             {types: ['geocode']});
-
         // When the user selects an address from the dropdown, populate the address
         // fields in the form.
         autocomplete.addListener('place_changed', fillInAddress);
       }
-
       function fillInAddress() {
         // Get the place details from the autocomplete object.
         var place = autocomplete.getPlace();
-
         for (var component in componentForm) {
           document.getElementById(component).value = '';
           document.getElementById(component).disabled = false;
         }
-
         // Get each component of the address from the place details
         // and fill the corresponding field on the form.
         for (var i = 0; i < place.address_components.length; i++) {
@@ -243,7 +208,6 @@
           }
         }
       }
-
       // Bias the autocomplete object to the user's geographical location,
       // as supplied by the browser's 'navigator.geolocation' object.
       function geolocate() {
