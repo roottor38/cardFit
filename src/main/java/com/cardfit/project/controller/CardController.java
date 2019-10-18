@@ -1,5 +1,8 @@
 package com.cardfit.project.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 
 import org.json.simple.JSONArray;
@@ -13,9 +16,23 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cardfit.project.service.CardService;
 
+
+import javax.imageio.ImageIO;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+
 @RestController
 @Component
 public class CardController {
+	
+	private static final Logger logger = LoggerFactory
+			.getLogger(CardController.class);
+	
 	public CardController() {
 		System.out.println("*** Start CardController ***");
 	}
@@ -54,4 +71,51 @@ public class CardController {
 		System.out.println("**** 실행 결과 : 카드 업데이트 완료");
 	}
 
+	@PostMapping("/cardControl")
+	public String cardControl(@RequestParam(value = "bankname") String bankName, @RequestParam(value = "cardname") String cardName, Model model) {
+		JSONArray result = service.cardNameSearch("cardname", cardName);
+		model.addAttribute("bankname", bankName);
+		model.addAttribute("card", result);
+		return "cardControl";
+	}
+	
+	@PostMapping("/myCardBenefit")
+	public String myCardBenefit(@RequestParam(value = "bankname") String bankname, @RequestParam(value = "cardname") String cardname, Model model) throws IOException{
+		if (cardname == null || cardname.length() == 0 || cardname.equals("")) {
+			return "myCardBenefit";
+		} else {
+			JSONArray result = service.cardNameSearch("cardname", cardname);
+			model.addAttribute("bankname", bankname);
+			model.addAttribute("card", result);
+			System.out.println(result);
+			return "myCardBenefit";
+		}
+	}
+	
+	@PostMapping("/createCard")
+	public String createCard(@RequestParam(value = "bankname") String bankname,
+			@RequestParam(value = "cardname") String cardname,
+			@RequestParam(value = "condition") String condition,
+			@RequestParam(value = "address") MultipartFile address,
+			@RequestParam(value = "movie") String movie,
+			@RequestParam(value = "cafe") String cafe,
+			@RequestParam(value = "transportation") String transportation,
+			@RequestParam(value = "telecom") String telecom,
+			@RequestParam(value = "offshop") String offshop,
+			@RequestParam(value = "onshop") String onshop,
+			@RequestParam(value = "food") String food,
+			@RequestParam(value = "others") String others) throws IOException {
+		String name = bankname+cardname;
+		if (!address.isEmpty()) {
+			try {
+				BufferedImage bImageFromConvert = ImageIO.read(new ByteArrayInputStream(address.getBytes()));
+				ImageIO.write(bImageFromConvert, "png",  new File("src\\main\\webapp\\images\\"+name+".jpg"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		boolean result = service.createCard(bankname, cardname, condition, movie, cafe, transportation, telecom, offshop, onshop, food, others);
+		return "redirect:/admin.html";
+	}
 }

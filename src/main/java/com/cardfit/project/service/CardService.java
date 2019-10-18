@@ -4,6 +4,10 @@ import java.io.IOException;
 
 import org.elasticsearch.action.delete.DeleteRequest;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.DocWriteRequest;
+import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.action.update.UpdateRequest;
@@ -31,24 +35,26 @@ public class CardService {
 	@Autowired
 	private ELConfiguration elConfig;
 
-	public JSONArray cardNameSearch(String fieldName, String queryTerm) {
+	// 내 카드검색
+	public JSONArray cardNameSearch(String cardName, String queryTerm) {
 		RestHighLevelClient client = elConfig.clientConnection();
 		SearchRequest searchRequest = new SearchRequest();
 		SearchResponse searchResponse = new SearchResponse();
 		JSONArray result = new JSONArray();
+		String query = "*" + queryTerm + "*";
 		try {
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(fieldName, queryTerm));
+			searchSourceBuilder.query(QueryBuilders.wildcardQuery(cardName, query));
 			searchRequest.source(searchSourceBuilder);
 			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
-			
+
 			for (SearchHit hit : searchHits) {
 				result.add(hit.getSourceAsMap());
 			}
 		} catch (IOException e) {
-			System.out.println("발생된 예외 : " + e.getMessage());
+			System.out.println("cardname search 발생된 예외 : " + e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
@@ -72,7 +78,7 @@ public class CardService {
 				result.add(hit.getSourceAsMap());
 			}
 		} catch (IOException e) {
-			System.out.println("발생된 예외 : " + e.getMessage());
+			System.out.println("check 발생된 예외 : " + e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
@@ -89,12 +95,12 @@ public class CardService {
 			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
-			
+
 			for (SearchHit hit : searchHits) {
 				result.add(hit.getSourceAsMap());
 			}
 		} catch (IOException e) {
-			System.out.println("발생된 예외 : " + e.getMessage());
+			System.out.println("keyword 발생된 예외 : " + e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
@@ -112,7 +118,7 @@ public class CardService {
 			searchRequest.source(searchSourceBuilder);
 			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
-			
+
 			for (SearchHit hit : searchHits) {
 				ids = hit.getId();
 				DeleteRequest deleteRequest = new DeleteRequest("shinhan", "_doc", ids);
@@ -121,7 +127,7 @@ public class CardService {
 			client.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("발생된 예외 : " + e.getMessage());
+			System.out.println("delete 발생된 예외 : " + e.getMessage());
 		}
 	}
 
@@ -137,7 +143,7 @@ public class CardService {
 			searchRequest.source(searchSourceBuilder);
 			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
-			
+
 			for (SearchHit hit : searchHits) {
 				id = hit.getId();
 				UpdateRequest updateRequest = new UpdateRequest("cardfit", "_doc", id); // index명 cardfit으로 바꿔줘야함
@@ -147,8 +153,45 @@ public class CardService {
 			client.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("발생된 예외 : " + e.getMessage());
+			System.out.println("update 발생된 예외 : " + e.getMessage());
 		}
+	}
+
+	public boolean createCard(String bankname, String cardname, String condition, String movie, String cafe, String transportation, String telecom, String offshop, String onshop, String food, String others ) {
+		RestHighLevelClient client = elConfig.clientConnection();
+		boolean result = false;
+		try {
+            String json= 
+            		"{"+
+            			"\"bankname\" : "+ "\""+bankname+"\","+
+            			"\"cardname\" : "+ "\""+cardname+"\","+
+            			"\"condition\" : "+ "\""+condition+"\","+
+            			"\"benefit\" : "+
+            			"{"+
+         					"\"movie\" : "+ "\""+movie+"\","+
+         					"\"cafe\" : "+ "\""+cafe+"\","+
+         					"\"transportation\" : "+ "\""+transportation+"\","+
+         					"\"telecom\" : "+ "\""+telecom+"\","+
+         					"\"offshop\" : "+ "\""+offshop+"\","+
+         					"\"onshop\" : "+ "\""+onshop+"\","+
+         					"\"food\" : "+ "\""+food+"\","+
+         					"\"others\" : "+ "\""+others+"\""+
+						"}"+
+            		"}";
+            IndexRequest request = new IndexRequest("cardfit","_doc").opType(DocWriteRequest.OpType.CREATE);;
+            request.source(json, XContentType.JSON); 
+            IndexResponse indexResponse = client.index(request, RequestOptions.DEFAULT);
+            if (indexResponse.getResult() == DocWriteResponse.Result.CREATED) {
+            	result = true;
+            } else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {
+            	result = false;
+            }
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("create 발생된 예외 : " + e.getMessage());
+		}
+		return result;
 	}
 
 }

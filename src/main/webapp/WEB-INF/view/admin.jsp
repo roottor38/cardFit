@@ -60,7 +60,7 @@
                     <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
 
                     <ul class="site-menu js-clone-nav d-none d-lg-block">
-                                          <li><a href="about.jsp">CardFit 소개</a></li>
+                      <li><a href="about.jsp">CardFit 소개</a></li>
                       <li><a href="myBenefit.jsp">내 카드 혜택보기</a></li>
                     <li class="has-children">
                        <a >카드 추천받기</a>

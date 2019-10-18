@@ -7,7 +7,7 @@
 	</configSuffixes>
 	<enableImports><![CDATA[false]]></enableImports>
 	<configs>
-		<config>java:com.cardfit.project.Step13CardFitApplication</config>
+		<config>java:com.cardfit.project.CardFitApplication</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

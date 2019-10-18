@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,6 +31,8 @@
     <link rel="stylesheet" href="css/style.css">
     
   </head>
+  
+  
   <body>
   
   <div class="site-wrap">
@@ -49,7 +53,7 @@
           <div class="py-1">
             <div class="row align-items-center">
               <div class="col-2">
-                <div class="mb-0 site-logo"><a href="index.jsp">Card<strong class="font-weight-bold">Fit</strong> </a></div>
+                <div class="mb-0 site-logo"><a href="index.html">Card<strong class="font-weight-bold">Fit</strong> </a></div>
               </div>
               <div class="col-10">
                 <nav class="site-navigation text-right" role="navigation">
@@ -57,16 +61,16 @@
                     <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
 
                     <ul class="site-menu js-clone-nav d-none d-lg-block">
-                                          <li><a href="about.jsp">CardFit 소개</a></li>
-                      <li><a href="myBenefit.jsp">내 카드 혜택보기</a></li>
+                                          <li><a href="about.html">CardFit 소개</a></li>
+                      <li><a href="/myCardBenefit">내 카드 혜택보기</a></li>
                     <li class="has-children">
                        <a >카드 추천받기</a>
                        <ul class="dropdown arrow-top">
-                          <li><a href="keyword.jsp">키워드로 추천받기</a></li>
-                          <li><a href="option.jsp">옵션으로 추천받기</a></li>
+                          <li><a href="/keyword">키워드로 추천받기</a></li>
+                          <li><a href="/option">옵션으로 추천받기</a></li>
                         </ul>
                       </li>
-                      <li><a href="contact.jsp">문의하기</a></li>
+                      <li><a href="contact.html">문의하기</a></li>
                     </ul>
                   </div>
                 </nav>
@@ -84,7 +88,8 @@
         <div class="row align-items-center">
           <div class="col-12" data-aos="fade">
             <h2 style="color:white">키워드로 추천받기</h2>
-            <form action="#">
+            <br>
+            <form action="/keyword" method="post">
               <div class="row mb-3">
                 <div class="col-md-9">
                   <div class="row">
@@ -92,7 +97,7 @@
                     <div class="col-md-6 mb-3 mb-md-0">
                       <div class="input-wrap">
                         
-                      <input type="text" class="form-control form-control-block search-input  border-0 px-4" id="autocomplete" placeholder="카드 이름을 입력해주세요" onFocus="geolocate()">
+                      <input type="text" class="form-control form-control-block search-input  border-0 px-4" name="search" placeholder="원하는 정보를 입력해주세요." onFocus="geolocate()">
                       </div>
                     </div>
                   </div>
@@ -110,71 +115,102 @@
       </div>
     </div>
 
+
+	<br>
+		<br>
+		<br>
+
+		<table align="center" border="0" cellpadding="5" cellspacing="2 width=" 100%" bordercolordark="white" bordercolorlight="black">
+			<c:choose>
+			<c:when test="${not empty data}">
+			<c:forEach items="${data}" var="card">
+				<br>
+				<hr>
+				<br>
+				<tr>
+					<td bgcolor="#336699">
+						<p align="center">
+							<font color="white"><b><span style="font-size: 13pt;">은행명</span></b></font>
+						</p>
+					</td>
+					<td bgcolor="">
+						<p align="center">
+							<span style="font-size: 13pt;"> ${card.bankname} </span>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#336699">
+						<p align="center">
+							<font color="white"><b><span style="font-size: 13pt;">카드이름</span></b></font>
+						</p>
+					</td>
+					<td bgcolor="">
+						<p align="center">
+							<span style="font-size: 13pt;"> ${card.cardname} </span>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#336699">
+						<p align="center">
+							<font color="white"><b><span style="font-size: 13pt;">이용실적</span></b></font>
+						</p>
+					</td>
+					<td bgcolor="">
+						<p align="center">
+							<span style="font-size: 13pt;">${card.condition}</span>
+						</p>
+					</td>
+				</tr>
+				<tr>
+					<td bgcolor="#336699">
+						<p align="center">
+							<font color="white"><b><span style="font-size: 13pt;">혜택</span></b></font>
+						</p>
+					</td>
+					<td bgcolor="">
+						<p align="center">
+							<span style="font-size: 13pt;">${card.benefit}</span>
+						</p>
+					</td>
+				</tr>
+				</c:forEach>
+			</c:when>
+				
+								<c:otherwise>
+				<tr>
+					<td colspan="5">
+						<p align="center">
+							<b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
+						</p>
+					</td>
+				</tr>
+				</c:otherwise>
+		</c:choose>
+
+
+			<tr>
+				<td bgcolor="">
+					<p align="center">
+						<span style="font-size: 9pt;"></span>
+					</p>
+				</td>
+				<td bgcolor="">
+					<p align="center">
+						<span style="font-size: 9pt;"></span>
+					</p>
+				</td>
+			</tr>
+
+		</table>
+
+
+		<br>
+		<br>
+		<br>
     
-    
 
-   
-    
-    <div class="site-section" data-aos="fade">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6 mb-5 mb-md-0">
-            
-              <div class="img-border">
-                <a href="https://vimeo.com/28959265" class="popup-vimeo image-play">
-                  <span class="icon-wrap">
-                    <span class="icon icon-play"></span>
-                  </span>
-                  <img src="images/hero_1.jpg" alt="Image" class="img-fluid rounded">
-                </a>
-              </div>
-            
-          </div>
-          <div class="col-md-5 ml-auto">
-            <div class="text-left mb-5 section-heading">
-              <h2>Testimonies</h2>
-            </div>
-
-            <p class="mb-4 h5 font-italic lineheight1-5">&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, nisi Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nobis magni eaque velit eum, id rem eveniet dolor possimus voluptas..&rdquo;</p>
-            <p>&mdash; <strong class="text-black font-weight-bold">John Holmes</strong>, Marketing Strategist</p>
-            <p><a href="https://vimeo.com/28959265" class="popup-vimeo text-uppercase">Watch Video <span class="icon-arrow-right small"></span></a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="site-section" data-aos="fade">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6 mb-5 mb-md-0 order-md-2">
-            
-              <div class="img-border">
-                <a href="https://vimeo.com/28959265" class="popup-vimeo image-play">
-                  <span class="icon-wrap">
-                    <span class="icon icon-play"></span>
-                  </span>
-                  <img src="images/hero_2.jpg" alt="Image" class="img-fluid rounded">
-                </a>
-              </div>
-            
-          </div>
-          <div class="col-md-5 ml-auto order-md-1">
-            <div class="text-left mb-5 section-heading">
-              <h2>Creative People</h2>
-            </div>
-
-            <p class="mb-4 h5 font-italic lineheight1-5">&ldquo;Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque, nisi Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odit nobis magni eaque velit eum, id rem eveniet dolor possimus voluptas..&rdquo;</p>
-            <p>&mdash; <strong class="text-black font-weight-bold">John Holmes</strong>, Marketing Strategist</p>
-            <p><a href="https://vimeo.com/28959265" class="popup-vimeo text-uppercase">Watch Video <span class="icon-arrow-right small"></span></a></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    
-
-
-    
     <footer class="site-footer">
       <div class="container">
         
