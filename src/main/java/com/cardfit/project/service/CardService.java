@@ -1,29 +1,24 @@
 package com.cardfit.project.service;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.http.HttpHost;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.DocWriteRequest;
+import org.elasticsearch.action.DocWriteResponse;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.script.ScriptType;
-import org.elasticsearch.script.mustache.MultiSearchTemplateRequest;
-import org.elasticsearch.script.mustache.MultiSearchTemplateResponse;
-import org.elasticsearch.script.mustache.MultiSearchTemplateResponse.Item;
-import org.elasticsearch.script.mustache.SearchTemplateRequest;
-import org.elasticsearch.script.mustache.SearchTemplateResponse;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -34,37 +29,37 @@ import com.cardfit.project.config.ELConfiguration;
 @Component
 public class CardService {
 	public CardService() {
-		System.out.println("---- Service started ----");
+		System.out.println("*** Start CardService ***");
 	}
 
 	@Autowired
 	private ELConfiguration elConfig;
 
 	// 내 카드검색
-	public JSONArray cardNameSearch(String fieldName, String queryTerm) {
+	public JSONArray cardNameSearch(String cardName, String queryTerm) {
 		RestHighLevelClient client = elConfig.clientConnection();
 		SearchRequest searchRequest = new SearchRequest();
 		SearchResponse searchResponse = new SearchResponse();
 		JSONArray result = new JSONArray();
+		String query = "*" + queryTerm + "*";
 		try {
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(fieldName, queryTerm));
+			searchSourceBuilder.query(QueryBuilders.wildcardQuery(cardName, query));
 			searchRequest.source(searchSourceBuilder);
 			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
-
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
+
 			for (SearchHit hit : searchHits) {
 				result.add(hit.getSourceAsMap());
 			}
 		} catch (IOException e) {
-			System.out.println("발생된 예외 : " + e.getMessage());
+			System.out.println("cardname search 발생된 예외 : " + e.getMessage());
 			e.printStackTrace();
 		}
 		return result;
 	}
 
-	// 카드 추천(체크박스)
 	public JSONArray checkSearch(String[] keys) {
 		RestHighLevelClient client = elConfig.clientConnection();
 		JSONArray result = new JSONArray();
@@ -78,43 +73,147 @@ public class CardService {
 			searchRequest.source(searchSourceBuilder);
 			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
-
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
 			for (SearchHit hit : searchHits) {
 				result.add(hit.getSourceAsMap());
-
 			}
 		} catch (IOException e) {
-			System.out.println("발생된 예외 : " + e.getMessage());
+			System.out.println("check 발생된 예외 : " + e.getMessage());
 			e.printStackTrace();
 		}
-
 		return result;
 	}
-	
-	// 카드 추천(체크박스)
-		public JSONArray keywordSearch(String keys) {
-			RestHighLevelClient client = elConfig.clientConnection();
-			JSONArray result = new JSONArray();
-			SearchRequest searchRequest = new SearchRequest();
+
+	public JSONArray keywordSearch(String queryTerms) {
+	      RestHighLevelClient client = elConfig.clientConnection();
+	      JSONArray result = new JSONArray();
+	      SearchRequest searchRequest = new SearchRequest();
+	      SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+	      try {
+	           searchSourceBuilder.query(QueryBuilders.wildcardQuery(queryTerms, "*"));
+	         searchRequest.source(searchSourceBuilder);
+	         SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+	         client.close();
+	         SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+	         for (SearchHit hit : searchHits) {
+	            result.add(hit.getSourceAsMap());
+	         }
+	      } catch (IOException e) {
+	         System.out.println("keyword 발생된 예외 : " + e.getMessage());
+	         e.printStackTrace();
+	      }
+	      return result;
+	   }
+
+	public boolean deleteCard(String cardName, String queryTerm) {
+		String ids = null;
+		RestHighLevelClient client = elConfig.clientConnection();
+		SearchRequest searchRequest = new SearchRequest();
+		SearchResponse searchResponse = new SearchResponse();
+		DeleteResponse deleteResponse = new DeleteResponse();
+		try {
 			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-			try {
-				searchSourceBuilder.query(QueryBuilders.wildcardQuery("*", "이디야"));
-				searchRequest.source(searchSourceBuilder);
-				SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-				client.close();
+			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(cardName, queryTerm));
+			searchRequest.source(searchSourceBuilder);
+			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			SearchHit[] searchHits = searchResponse.getHits().getHits();
 
-				SearchHit[] searchHits = searchResponse.getHits().getHits();
-				for (SearchHit hit : searchHits) {
-					result.add(hit.getSourceAsMap());
-
-				}
-			} catch (IOException e) {
-				System.out.println("발생된 예외 : " + e.getMessage());
-				e.printStackTrace();
+			for (SearchHit hit : searchHits) {
+				ids = hit.getId();
+				DeleteRequest deleteRequest = new DeleteRequest("cardfit", "_doc", ids);
+				deleteResponse = client.delete(deleteRequest, RequestOptions.DEFAULT);
 			}
-
-			return result;
+			client.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("delete 발생된 예외 : " + e.getMessage());
+			return false;
 		}
+		return true;
+	}
+
+	public boolean updateCard(String cardName, String queryTerm, String bankname, String condition, String movie, String cafe, String transportation ,String telecom, String offshop, String onshop, String food, String others ) {
+		String id = null;
+		RestHighLevelClient client = elConfig.clientConnection();
+		SearchRequest searchRequest = new SearchRequest();
+		SearchResponse searchResponse = new SearchResponse();
+		UpdateResponse updateResponse = new UpdateResponse();
+		try {
+			String jsonString= 
+            		"{"+
+            			"\"bankname\" : "+ "\""+bankname+"\","+
+            			"\"cardname\" : "+ "\""+queryTerm+"\","+
+            			"\"condition\" : "+ "\""+condition+"\","+
+            			"\"benefit\" : "+
+            			"{"+
+         					"\"movie\" : "+ "\""+movie+"\","+
+         					"\"cafe\" : "+ "\""+cafe+"\","+
+         					"\"transportation\" : "+ "\""+transportation+"\","+
+         					"\"telecom\" : "+ "\""+telecom+"\","+
+         					"\"offshop\" : "+ "\""+offshop+"\","+
+         					"\"onshop\" : "+ "\""+onshop+"\","+
+         					"\"food\" : "+ "\""+food+"\","+
+         					"\"others\" : "+ "\""+others+"\""+
+						"}"+
+            		"}";
+			
+			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(cardName, queryTerm));
+			searchRequest.source(searchSourceBuilder);
+			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			SearchHit[] searchHits = searchResponse.getHits().getHits();
+
+			for (SearchHit hit : searchHits) {
+				id = hit.getId();
+				UpdateRequest updateRequest = new UpdateRequest("cardfit", "_doc", id); // index명 cardfit으로 바꿔줘야함
+				updateRequest.doc(jsonString, XContentType.JSON);
+				updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
+			}
+			client.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("update 발생된 예외 : " + e.getMessage());
+			return false;
+		}
+		return true;
+	}
+
+	public boolean createCard(String bankname, String cardname, String condition, String movie, String cafe, String transportation, String telecom, String offshop, String onshop, String food, String others ) {
+	      RestHighLevelClient client = elConfig.clientConnection();
+	      boolean result = false;
+	      try {
+	            String json= 
+	                  "{"+
+	                     "\"bankname\" : "+ "\""+bankname+"\","+
+	                     "\"cardname\" : "+ "\""+cardname+"\","+
+	                     "\"condition\" : "+ "\""+condition+"\","+
+	                     "\"benefit\" : "+
+	                     "{"+
+	                        "\"movie\" : "+ "\""+movie+"\","+
+	                        "\"cafe\" : "+ "\""+cafe+"\","+
+	                        "\"transportation\" : "+ "\""+transportation+"\","+
+	                        "\"telecom\" : "+ "\""+telecom+"\","+
+	                        "\"offshop\" : "+ "\""+offshop+"\","+
+	                        "\"onshop\" : "+ "\""+onshop+"\","+
+	                        "\"food\" : "+ "\""+food+"\","+
+	                        "\"others\" : "+ "\""+others+"\""+
+	                  "}"+
+	                  "}";
+	            IndexRequest request = new IndexRequest("cardfit", "_doc");
+	            request.source(json, XContentType.JSON); 
+	            IndexResponse indexResponse = client.index(request, RequestOptions.DEFAULT);
+	            if (indexResponse.getResult() == DocWriteResponse.Result.CREATED) {
+	               result = true;
+	            } else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {
+	               result = false;
+	            }
+	         
+	      } catch (IOException e) {
+	         e.printStackTrace();
+	         System.out.println("create 발생된 예외 : " + e.getMessage());
+	      }
+	      return result;
+	   }
 
 }
