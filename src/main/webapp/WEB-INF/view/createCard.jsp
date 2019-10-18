@@ -49,11 +49,15 @@
 }
 </style>
 </head>
+<<<<<<< HEAD
 <script type="text/javascript">
 	function saveFile(){
 		var file = document.getElementById("address");
 	}
 </script>
+=======
+
+>>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 <body>
 
 	<div class="site-section">
@@ -73,8 +77,18 @@
 					<tbody>
 						<tr>
 							<td>은행</td>
+<<<<<<< HEAD
 							<td colspan="2"><input type="text" placeholder="카드발급은행 "
 								name="bankname" class="form-control" /></td>
+=======
+							<td colspan="2">												<select
+													class="form-control"
+													name="bankname">
+													<option value="신한은행">신한은행</option>
+													<option value="우리은행">우리은행</option>
+													<option value="국민은행">국민은행</option>
+												</select></td>
+>>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 						</tr>
 						<tr>
 							<td>카드이름</td>

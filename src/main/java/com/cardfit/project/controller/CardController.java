@@ -4,104 +4,120 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.cardfit.project.service.CardService;
-
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import org.json.simple.JSONArray;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.cardfit.project.service.CardService;
 
 
 @Controller
 @Component
 public class CardController {
-	
 	private static final Logger logger = LoggerFactory
 			.getLogger(CardController.class);
 	
 	public CardController() {
 		System.out.println("*** Start CardController ***");
 	}
-
+	
 	@Autowired
 	private CardService service;
-
-	@GetMapping("/searchMyCardByCardName")
-	public JSONArray searchMyCardByCardName(String cardName, String queryTerm) throws IOException {
-		JSONArray result = service.cardNameSearch(cardName, queryTerm);
-		return result;
-	}
-
-	@GetMapping("/recommendCardByCheckBox")
-	public JSONArray recommendCardByCheckBox(String[] queryTerms) throws IOException {
-		String[] queryTerms2 = {"benefit.movie", "benefit.cafe"};
-		JSONArray result = service.checkSearch(queryTerms2);
-		return result;
-	}
+	
 	@RequestMapping("/option")
 	public String option() {
 		return "option";
 	}
-
+	
 	@PostMapping("/option")
-	public String option(@RequestParam(value="movie", required=false) String movie, @RequestParam(value="telecome", required=false) String telecome, @RequestParam(value="traffic", required=false) String traffic,
+	public String option(@RequestParam(value="movie", required=false) String movie, @RequestParam(value="telecom", required=false) String telecom, @RequestParam(value="transportation", required=false) String transportation,
 			@RequestParam(value="offshop", required=false) String offshop, @RequestParam(value="onshop", required=false) String onshop, @RequestParam(value="food", required=false) String food,
 			@RequestParam(value="cafe", required=false) String cafe, @RequestParam(value="others", required=false) String others, Model model) {
 		//체크 박스로 추천 로직
+		ArrayList<String> data = new ArrayList<>();
+		if(movie!=null) {
+			data.add("benefit.movie");
+		}
+		if(telecom!=null) {
+			data.add("benefit.telecom");
+		}
+		if(transportation!=null) {
+			data.add("benefit.transportation");
+		}
+		if(offshop!=null) {
+			data.add("benefit.offshop");
+		}
+		if(onshop!=null) {
+			data.add("benefit.onshop");
+		}
+		if(food!=null) {
+			data.add("benefit.food");
+		}
+		if(cafe!=null) {
+			data.add("benefit.cafe");
+		}
+		if(others!=null) {
+			data.add("benefit.others");
+		}
+		System.out.println(data);
+		String[] term = new String[data.size()];
+		for(int i = 0; i < data.size(); i++) {
+			term[i] = data.get(i);
+		}
+		JSONArray result = service.checkSearch(term);
+		model.addAttribute("card", result);
 		return "option";
 	}
-	@GetMapping("/searchCardByKeyword")
-	public JSONArray searchCardByKeyword(String queryTerm) throws IOException {
-		JSONArray result = service.keywordSearch(queryTerm);
-		return result;
+	
+	@RequestMapping("/keyword")
+	public String keyword() {
+		return "keyword";
 	}
-
-	@DeleteMapping("/deleteCard")
-	public void deleteCard(String cardName, String queryTerm) throws IOException {
-		service.deleteCard("cardName", "queryTerm");
-		System.out.println("**** 실행 결과 : 카드 삭제 완료");
+	
+	@PostMapping("/keyword")
+	public String keyword(@RequestParam(value = "search") String search, Model model) {
+		if (search == null || search.equals("") || search.length() == 0) {
+			return "keyword";
+		} else {
+			JSONArray result = service.keywordSearch(search);
+			model.addAttribute("card", result);
+		}
+		return "keyword";
 	}
-
-	@PostMapping("/updateCard")
-	public void updateCard(String cardName, String queryTerm, JSONObject input) throws IOException {
-		String data = input.toJSONString();
-		service.updateCard(cardName, queryTerm, data);
-		System.out.println("**** 실행 결과 : 카드 업데이트 완료");
-	}
-
+	
 	@PostMapping("/cardControl")
-	public String cardControl(@RequestParam(value = "bankname") String bankName, @RequestParam(value = "cardname") String cardName, Model model) {
-		JSONArray result = service.cardNameSearch("cardname", cardName);
-		model.addAttribute("bankname", bankName);
+	public String cardControl(@RequestParam(value = "cardname") String cardname, Model model) {
+		JSONArray result = service.cardNameSearch("cardname", cardname);
 		model.addAttribute("card", result);
 		return "cardControl";
 	}
 	
+	@RequestMapping("/myCardBenefit")
+	public String myCardBenefit() {
+		return "myCardBenefit";
+	}
+
 	@PostMapping("/myCardBenefit")
-	public String myCardBenefit(@RequestParam(value = "bankname") String bankname, @RequestParam(value = "cardname") String cardname, Model model) throws IOException{
+	public String myCardBenefit(@RequestParam(value = "cardname") String cardname, Model model) throws IOException{
 		if (cardname == null || cardname.length() == 0 || cardname.equals("")) {
 			return "myCardBenefit";
 		} else {
 			JSONArray result = service.cardNameSearch("cardname", cardname);
-			model.addAttribute("bankname", bankname);
 			model.addAttribute("card", result);
-			System.out.println(result);
 			return "myCardBenefit";
 		}
 	}
@@ -112,7 +128,75 @@ public class CardController {
 	}
 	
 	@PostMapping("/createCard")
-	public String createCard(@RequestParam(value = "bankname") String bankname,
+	public String createCard(@RequestParam(value = "bankname", required=false) String bankname,
+			@RequestParam(value = "cardname", required=false) String cardname,
+			@RequestParam(value = "condition", required=false) String condition,
+			@RequestParam(value = "address", required=false) MultipartFile address,
+			@RequestParam(value = "movie", required=false) String movie,
+			@RequestParam(value = "cafe", required=false) String cafe,
+			@RequestParam(value = "transportation", required=false) String transportation,
+			@RequestParam(value = "telecom", required=false) String telecom,
+			@RequestParam(value = "offshop", required=false) String offshop,
+			@RequestParam(value = "onshop", required=false) String onshop,
+			@RequestParam(value = "food", required=false) String food,
+			@RequestParam(value = "others", required=false) String others) throws IOException {
+		//관리자 카드 추가 로직
+		String name = bankname+cardname;
+		if (!address.isEmpty()) {
+			try {
+				BufferedImage bImageFromConvert = ImageIO.read(new ByteArrayInputStream(address.getBytes()));
+				ImageIO.write(bImageFromConvert, "png",  new File("src\\main\\webapp\\images\\"+name+".jpg"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		if(condition==null) {
+			condition="null";
+		}
+		if(movie==null) {
+			movie="null";
+		}
+		if(cafe==null) {
+			cafe="null";
+		}
+		if(transportation==null) {
+			transportation="null";
+		}
+		if(telecom==null) {
+			telecom="null";
+		}
+		if(offshop==null) {
+			offshop="null";
+		}
+		if(onshop==null) {
+			onshop="null";
+		}
+		if(food==null) {
+			food="null";
+		}
+		if(others==null) {
+			others="null";
+		}
+		boolean result = service.createCard(bankname, cardname, condition, movie, cafe, transportation, telecom, offshop, onshop, food, others);
+		
+		return "redirect:/admin.html";
+	}
+	
+	@GetMapping("/deleteCard/{cardname}")
+	public String deleteCard(@PathVariable(value = "cardname") String cardname) {
+		boolean result = service.deleteCard("cardname", cardname);
+		return "redirect:/admin.html";
+	}
+	
+	@RequestMapping("/updateCard/{cardname}")
+	public String updateCard(@PathVariable(value = "cardname") String cardname, Model model) {
+		JSONArray result = service.cardNameSearch("cardname", cardname);
+		model.addAttribute("card", result);
+		return "updateCard";
+	}
+	
+	@PostMapping("/updateCard")
+	public String updateCard(@RequestParam(value = "bankname") String bankname,
 			@RequestParam(value = "cardname") String cardname,
 			@RequestParam(value = "condition") String condition,
 			@RequestParam(value = "address") MultipartFile address,
@@ -123,18 +207,14 @@ public class CardController {
 			@RequestParam(value = "offshop") String offshop,
 			@RequestParam(value = "onshop") String onshop,
 			@RequestParam(value = "food") String food,
-			@RequestParam(value = "others") String others) throws IOException {
-		String name = bankname+cardname;
-		if (!address.isEmpty()) {
-			try {
-				BufferedImage bImageFromConvert = ImageIO.read(new ByteArrayInputStream(address.getBytes()));
-				ImageIO.write(bImageFromConvert, "png",  new File("src\\main\\webapp\\images\\"+name+".jpg"));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		
-		boolean result = service.createCard(bankname, cardname, condition, movie, cafe, transportation, telecom, offshop, onshop, food, others);
+			@RequestParam(value = "others") String others) {
+		//관리자 카드 정보 수정 로직
+		System.out.println("실행로직");
+		boolean result = service.updateCard("cardname", cardname, bankname, condition, movie, cafe, transportation, telecom, offshop, onshop, food, others);
+		System.out.println("실행완료");
 		return "redirect:/admin.html";
 	}
+	
+	
+
 }

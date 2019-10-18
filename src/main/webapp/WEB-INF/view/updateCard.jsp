@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Work+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -61,6 +61,7 @@
 <br><br><br>
     
         <form action="/updateCard" method="post" encType="multiplart/form-data">
+<<<<<<< HEAD
 <table class="table table-bordered">
     <tbody>
             <tr>
@@ -84,10 +85,75 @@
     </tbody>
 </table>
  <input type="submit" class="btn btn-search btn-primary btn-block" value="update">
+=======
+
+        <table frame="void" >
+	     <td>
+		     <tr>
+		     <img src="images/${card[0].bankname}${card[0].cardname}.jpg" width="350" height="200"><br><br>
+		     </tr>
+		     <tr>
+		     <input type="file" width="350" height="200"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		     </tr>
+	     </td>
+         <td>
+        	 <table class="table table-bordered">
+            
+	            <tr>
+	                <td>은행명 </td>
+	                <td colspan="2" width="1100" height="50">${bankname}
+	                <input type="hidden" name="bankname" value="${bankname}"></td>
+	            </tr>
+	            <tr>
+	                <td>카드이름 </td>
+	                <td colspan="2">${card[0].cardname}
+	                <input type="hidden" name="cardname" value="${card[0].cardname}"></td>
+	            </tr>
+	            <tr>
+	                <td>이용조건</td>
+	                 <td colspan="2"><input type="text" placeholder="${card[0].condition}" name="condition" class="form-control"/></td>
+	            </tr>
+	            <tr>
+	                <td>영화</td>
+	                <td><input placeholder="${card[0].benefit.movie}" name="movie" class="form-control"></td>
+	            </tr>
+	            <tr>
+	                <td>카페</td>
+	              	<td><input placeholder="${card[0].benefit.cafe}" name="cafe" class="form-control"></td>
+	            </tr>
+	            <tr>
+	                <td>쇼핑</td>
+	                <td><input placeholder="${card[0].benefit.offshop}" name="offshop" class="form-control"></td>
+	            </tr>
+	            <tr>
+	                <td>온라인쇼핑</td>
+	                <td><input placeholder="${card[0].benefit.onshop}" name="onshop" class="form-control"></td>
+	            </tr>
+	            <tr>
+	                <td>통신사</td>
+	                <td><input placeholder="${card[0].benefit.telecom}" name="telecom" class="form-control"></td>
+	            </tr>
+	            <tr>
+	                <td>대중교통</td>
+	                <td><input placeholder="${card[0].benefit.transportation}" name="transportation" class="form-control"></td>
+	            </tr>
+	            <tr>
+	                <td>외식</td>
+	                <td><input placeholder="${card[0].benefit.food}" name="food" class="form-control"></td>
+	            </tr>
+	            <tr>
+	                <td>기타</td>
+	                <td><input placeholder="${card[0].benefit.others}" name="others" class="form-control"></td>
+	            </tr>
+			</table>
+		</td>
+>>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
  
+ </table>
+ 		<input type="submit" class="btn btn-search btn-primary btn-block" value="update">
  </form>
-  
-  
+ 
+ </div>
   </div>
 
   <script src="js/jquery-3.3.1.min.js"></script>

@@ -103,14 +103,17 @@
 									<div class="row">
 										<div class="col-md-6 mb-3 mb-md-0">
 											<div class="input-wrap">
-												<select
+												<input type="text"
 													class="form-control form-control-block search-input  border-0 px-4"
+<<<<<<< HEAD
 													name="bankname">
 													<option value="신한은행">신한은행</option>
 													<option value="우리은행">우리은행</option>
 													<option value="국민은행">국민은행</option>
 												</select> <br> <input type="text"
 													class="form-control form-control-block search-input  border-0 px-4"
+=======
+>>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 													name="cardname" placeholder="카드 이름을 입력해주세요">
 											</div>
 										</div>
@@ -150,11 +153,19 @@
            <div class="row">
              <div class="col-md-15 mx-auto text-center mb-10 section-heading">
 
+<<<<<<< HEAD
          <br><hr><br>
          
         <table frame="void">
 	     <td>
 	     <img src="images/${bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+=======
+         <br><br>
+         
+        <table frame="void">
+	     <td>
+	     <img src="images/${card.bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+>>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
 	     </td>
          <td>
          
@@ -163,7 +174,11 @@
             
             <tr>
                 <td>은행명 </td>
+<<<<<<< HEAD
                 <td colspan="2">${bankname}</td>
+=======
+                <td colspan="2" width="1100" height="50" >${card.bankname}</td>
+>>>>>>> 562dca11555de287faf0a1f6a84f9273863e2af4
             </tr>
             <tr>
                 <td>카드이름 </td>
