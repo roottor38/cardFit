@@ -69,13 +69,13 @@ public class CardService {
 			for (String key : keys) {
 				searchSourceBuilder.query(QueryBuilders.wildcardQuery(key, "*"));
 			}
-
 			searchRequest.source(searchSourceBuilder);
 			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
 			for (SearchHit hit : searchHits) {
 				result.add(hit.getSourceAsMap());
+				System.out.println(hit);
 			}
 		} catch (IOException e) {
 			System.out.println("check 발생된 예외 : " + e.getMessage());
@@ -178,9 +178,11 @@ public class CardService {
          					"\"others\" : "+ "\""+others+"\""+
 						"}"+
             		"}";
-            IndexRequest request = new IndexRequest("cardfit","_doc").opType(DocWriteRequest.OpType.CREATE);;
+            IndexRequest request = new IndexRequest("shinhan", "_doc");
             request.source(json, XContentType.JSON); 
+            System.out.println(1);
             IndexResponse indexResponse = client.index(request, RequestOptions.DEFAULT);
+            System.out.println(2);
             if (indexResponse.getResult() == DocWriteResponse.Result.CREATED) {
             	result = true;
             } else if (indexResponse.getResult() == DocWriteResponse.Result.UPDATED) {

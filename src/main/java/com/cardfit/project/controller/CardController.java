@@ -9,10 +9,12 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.cardfit.project.service.CardService;
 
@@ -26,7 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 
-@RestController
+@Controller
 @Component
 public class CardController {
 	
@@ -48,10 +50,22 @@ public class CardController {
 
 	@GetMapping("/recommendCardByCheckBox")
 	public JSONArray recommendCardByCheckBox(String[] queryTerms) throws IOException {
-		JSONArray result = service.checkSearch(queryTerms);
+		String[] queryTerms2 = {"benefit.movie", "benefit.cafe"};
+		JSONArray result = service.checkSearch(queryTerms2);
 		return result;
 	}
+	@RequestMapping("/option")
+	public String option() {
+		return "option";
+	}
 
+	@PostMapping("/option")
+	public String option(@RequestParam(value="movie", required=false) String movie, @RequestParam(value="telecome", required=false) String telecome, @RequestParam(value="traffic", required=false) String traffic,
+			@RequestParam(value="offshop", required=false) String offshop, @RequestParam(value="onshop", required=false) String onshop, @RequestParam(value="food", required=false) String food,
+			@RequestParam(value="cafe", required=false) String cafe, @RequestParam(value="others", required=false) String others, Model model) {
+		//체크 박스로 추천 로직
+		return "option";
+	}
 	@GetMapping("/searchCardByKeyword")
 	public JSONArray searchCardByKeyword(String queryTerm) throws IOException {
 		JSONArray result = service.keywordSearch(queryTerm);
@@ -90,6 +104,11 @@ public class CardController {
 			System.out.println(result);
 			return "myCardBenefit";
 		}
+	}
+	
+	@RequestMapping("/createCard")
+	public String createCard() {
+		return "createCard";
 	}
 	
 	@PostMapping("/createCard")
