@@ -1,28 +1,20 @@
 package com.cardfit.project.service;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.apache.http.HttpHost;
+import org.elasticsearch.action.delete.DeleteRequest;
+import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.action.update.UpdateResponse;
 import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.index.query.QueryBuilder;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.script.ScriptType;
-import org.elasticsearch.script.mustache.MultiSearchTemplateRequest;
-import org.elasticsearch.script.mustache.MultiSearchTemplateResponse;
-import org.elasticsearch.script.mustache.MultiSearchTemplateResponse.Item;
-import org.elasticsearch.script.mustache.SearchTemplateRequest;
-import org.elasticsearch.script.mustache.SearchTemplateResponse;
 import org.elasticsearch.search.SearchHit;
-import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -33,13 +25,13 @@ import com.cardfit.project.config.ELConfiguration;
 @Component
 public class CardService {
 	public CardService() {
-		System.out.println("---- Service started ----");
+		System.out.println("*** Start CardService ***");
 	}
 
 	@Autowired
 	private ELConfiguration elConfig;
-	// �� ī��˻�
-	public SearchHits cardNameSearch(String fieldName, String queryTerm) {
+
+	public JSONArray cardNameSearch(String fieldName, String queryTerm) {
 		RestHighLevelClient client = elConfig.clientConnection();
 		SearchRequest searchRequest = new SearchRequest();
 		SearchResponse searchResponse = new SearchResponse();
@@ -50,36 +42,113 @@ public class CardService {
 			searchRequest.source(searchSourceBuilder);
 			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
 			client.close();
+			SearchHit[] searchHits = searchResponse.getHits().getHits();
 			
+			for (SearchHit hit : searchHits) {
+				result.add(hit.getSourceAsMap());
+			}
+		} catch (IOException e) {
+			System.out.println("발생된 예외 : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public JSONArray checkSearch(String[] keys) {
+		RestHighLevelClient client = elConfig.clientConnection();
+		JSONArray result = new JSONArray();
+		SearchRequest searchRequest = new SearchRequest();
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		try {
+			for (String key : keys) {
+				searchSourceBuilder.query(QueryBuilders.wildcardQuery(key, "*"));
+			}
+
+			searchRequest.source(searchSourceBuilder);
+			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			client.close();
 			SearchHit[] searchHits = searchResponse.getHits().getHits();
 			for (SearchHit hit : searchHits) {
-				System.out.println(hit.getSourceAsString());
-				System.out.println(hit.getId());
+				result.add(hit.getSourceAsMap());
 			}
-		}catch (IOException e) {
-			System.out.println("�߻��� ���� : " + e.getMessage());
-			//e.printStackTrace();
+		} catch (IOException e) {
+			System.out.println("발생된 예외 : " + e.getMessage());
+			e.printStackTrace();
 		}
-		return searchResponse.getHits();
+		return result;
 	}
-	
-	//ī�� ��õ(üũ�ڽ�)
-//	public static SearchHits checkSearch() throws IOException {
-//		RestHighLevelClient client = createConnection();
-//		SearchRequest searchRequest = new SearchRequest();
-//		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//		searchSourceBuilder.query(QueryBuilders.wildcardQuery("benefit.cafe", "*"));
-//		searchSourceBuilder.query(QueryBuilders.wildcardQuery("benefit.onshop", "*"));
-//		searchRequest.source(searchSourceBuilder);
-//		SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
-//		client.close();
-//		SearchHit[] searchHits = searchResponse.getHits().getHits();
-//		for (SearchHit hit : searchHits) {
-//			System.out.println(hit.getSourceAsString());
-//			System.out.println(hit.getId());
-//
-//		}
-//		return searchResponse.getHits();
-//	}
+
+	public JSONArray keywordSearch(String queryTerm) {
+		RestHighLevelClient client = elConfig.clientConnection();
+		JSONArray result = new JSONArray();
+		SearchRequest searchRequest = new SearchRequest();
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		try {
+			searchSourceBuilder.query(QueryBuilders.multiMatchQuery(queryTerm, "*"));
+			searchRequest.source(searchSourceBuilder);
+			SearchResponse searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			client.close();
+			SearchHit[] searchHits = searchResponse.getHits().getHits();
+			
+			for (SearchHit hit : searchHits) {
+				result.add(hit.getSourceAsMap());
+			}
+		} catch (IOException e) {
+			System.out.println("발생된 예외 : " + e.getMessage());
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public void deleteCard(String cardName, String queryTerm) {
+		String ids = null;
+		RestHighLevelClient client = elConfig.clientConnection();
+		SearchRequest searchRequest = new SearchRequest();
+		SearchResponse searchResponse = new SearchResponse();
+		DeleteResponse deleteResponse = new DeleteResponse();
+		try {
+			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(cardName, queryTerm));
+			searchRequest.source(searchSourceBuilder);
+			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			SearchHit[] searchHits = searchResponse.getHits().getHits();
+			
+			for (SearchHit hit : searchHits) {
+				ids = hit.getId();
+				DeleteRequest deleteRequest = new DeleteRequest("shinhan", "_doc", ids);
+				deleteResponse = client.delete(deleteRequest, RequestOptions.DEFAULT);
+			}
+			client.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("발생된 예외 : " + e.getMessage());
+		}
+	}
+
+	public void updateCard(String cardName, String queryTerm, String jsonString) {
+		String id = null;
+		RestHighLevelClient client = elConfig.clientConnection();
+		SearchRequest searchRequest = new SearchRequest();
+		SearchResponse searchResponse = new SearchResponse();
+		UpdateResponse updateResponse = new UpdateResponse();
+		try {
+			SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+			searchSourceBuilder.query(QueryBuilders.matchPhraseQuery(cardName, queryTerm));
+			searchRequest.source(searchSourceBuilder);
+			searchResponse = client.search(searchRequest, RequestOptions.DEFAULT);
+			SearchHit[] searchHits = searchResponse.getHits().getHits();
+			
+			for (SearchHit hit : searchHits) {
+				id = hit.getId();
+				UpdateRequest updateRequest = new UpdateRequest("cardfit", "_doc", id); // index명 cardfit으로 바꿔줘야함
+				updateRequest.doc(jsonString, XContentType.JSON);
+				updateResponse = client.update(updateRequest, RequestOptions.DEFAULT);
+			}
+			client.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("발생된 예외 : " + e.getMessage());
+		}
+	}
 
 }

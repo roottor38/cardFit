@@ -2,15 +2,16 @@ package com.cardfit.project.controller;
 
 import java.io.IOException;
 
-import org.elasticsearch.search.SearchHits;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cardfit.project.service.CardService;
-
 
 @RestController
 @Component
@@ -18,65 +19,39 @@ public class CardController {
 	public CardController() {
 		System.out.println("*** Start CardController ***");
 	}
-//	private ELConfiguration elConfig;
-	
-	
+
 	@Autowired
 	private CardService service;
 
-	
-	//-------------------- º≠∫ÒΩ∫ø°º≠ ºˆ«‡µ«º≠ø¬≥¿ª JSONArray∑Œ πŸ≤„º≠ «¡∑–∆Æ∑Œ ª—∑¡¡÷¥¬ ≥-----------------
-	
-	// ±∏«ˆ ±‚¥…1 : ≥ª ƒ´µÂ ∞Àªˆ
 	@GetMapping("/searchMyCardByCardName")
-	public SearchHits searchMyCardByCardName() throws IOException{
-		JSONArray result = new JSONArray();
-		System.out.println("--Ω√¿€");
-		SearchHits hitsResult = service.cardNameSearch("cardname", "ø‰±‚ø‰");
-		System.out.println("--≥°");
-		//result = (JSONArray)hitsResult;
-		return hitsResult;
-	}
-	
-	// ±∏«ˆ ±‚¥…2 : ƒ´µÂ √ﬂ√µ(√º≈©π⁄Ω∫)
-	@GetMapping("/recommendCardByCheckBox")
-	public JSONArray recommendCardByCheckBox(String[] terms) {
-		JSONArray result = new JSONArray();
+	public JSONArray searchMyCardByCardName(String cardName, String queryTerm) throws IOException {
+		JSONArray result = service.cardNameSearch(cardName, queryTerm);
 		return result;
 	}
-	
-//	@GetMapping("/searchAllAboutBankByIndex")
-//	public Object searchAllAboutBankByIndex(@RequestParam String index, @RequestParam String type, @RequestParam String id ) throws IOException {
-//		GetRequest request = new GetRequest("shinhan","_doc","1");
-//		GetResponse response = null;
-//		try(RestHighLevelClient client = clientConnection())
-//		{
-//			response = client.get(request, RequestOptions.DEFAULT);
-//			client.close();
-//		}catch (ElasticsearchException e) {
-//			if(e.status() == RestStatus.NOT_FOUND) {
-//				System.out.println("client ø¨∞· ø¿∑˘");
-//			}
-//		}
-//		return response.isExists() ? response : null;
-//	}
-//	
-//	//index, cardname(ƒ´µÂ∏Ì)¿∏∑Œ ƒ´µÂ ∞Àªˆ«œ±‚
-//	//@GetMapping("/cardInfo")
-//	public JSONObject getCardfromIndex(String cardName) {
-//		JSONObject info = null;
-//		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//		searchSourceBuilder.query(QueryBuilders.termQuery("cardname", cardName));
-//		return info;
-//	}
-//	
-//	//multi Query
-//	@PostMapping("/multiQ")
-//	@ResponseStatus(HttpStatus.OK)
-//	public SearchResponse getAllMatchedInfo() {
-//		System.out.println("getAllMatchedInfo Ω√¿€");
-//		
-//	}
-	
-	
+
+	@GetMapping("/recommendCardByCheckBox")
+	public JSONArray recommendCardByCheckBox(String[] queryTerms) throws IOException {
+		JSONArray result = service.checkSearch(queryTerms);
+		return result;
+	}
+
+	@GetMapping("/searchCardByKeyword")
+	public JSONArray searchCardByKeyword(String queryTerm) throws IOException {
+		JSONArray result = service.keywordSearch(queryTerm);
+		return result;
+	}
+
+	@DeleteMapping("/deleteCard")
+	public void deleteCard(String cardName, String queryTerm) throws IOException {
+		service.deleteCard("cardName", "queryTerm");
+		System.out.println("**** Ïã§Ìñâ Í≤∞Í≥º : Ïπ¥Îìú ÏÇ≠Ï†ú ÏôÑÎ£å");
+	}
+
+	@PostMapping("/updateCard")
+	public void updateCard(String cardName, String queryTerm, JSONObject input) throws IOException {
+		String data = input.toJSONString();
+		service.updateCard(cardName, queryTerm, data);
+		System.out.println("**** Ïã§Ìñâ Í≤∞Í≥º : Ïπ¥Îìú ÏóÖÎç∞Ïù¥Ìä∏ ÏôÑÎ£å");
+	}
+
 }
