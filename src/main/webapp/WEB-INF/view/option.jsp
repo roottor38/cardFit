@@ -35,7 +35,13 @@
 <link rel="stylesheet" href="css/style.css">
 
 </head>
-
+<script type="text/javascript">
+function check(){
+	alert(1);
+	return false;
+	}
+}
+</script>
 <style type="text/css">
 input[type=checkbox] {
 	width: 20px;
@@ -110,37 +116,37 @@ input[type=checkbox] {
 						<h2 style="color: white">옵션으로 추천받기</h2>
 						<br>
 						
-						<form action="/option" method="post" style="color:white">
+						<form action="/option" method="post" style="color:white" onsubmit="check()">
 							<div class="row mb-3">
 								<div class="col-md-9">
 									<div class="row">
 										<table style="font-size: 25px;">
 											<tr>
 												<td>
-												<input type="checkbox" id="movie" name="movie" value="movie">영화<br>
+												<input type="checkbox" id="movie" name="movie"  value="movie">영화<br>
 												</td>
 												<td>
-												<input type="checkbox" id="telecome" name="telecome" value="telecome">통신사&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+												<input type="checkbox" id="telecom" name="telecom"  value="telecom">통신사&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
 												</td>
 												<td>
-												<input type="checkbox" id="traffic" name="traffic" value="traffic">대중교통 &nbsp;&nbsp;&nbsp; <br>
+												<input type="checkbox" id="transportation" name="transportation"  value="transportation">대중교통 &nbsp;&nbsp;&nbsp; <br>
 												</td>
 												<td>
-												<input type="checkbox" id="offshop" name ="offshop" value="offshop">쇼핑 <br>
+												<input type="checkbox" id="offshop" name ="offshop"  value="offshop">쇼핑 <br>
 												</td>
 											</tr>
 											<tr>
 												<td>
-												<input type="checkbox" id="onshop" name="onshop" value="onshop">온라인쇼핑 &nbsp;&nbsp; <br>
+												<input type="checkbox" id="onshop" name="onshop"  value="onshop">온라인쇼핑 &nbsp;&nbsp; <br>
 												</td>
 												<td>
-												<input type="checkbox" id="food" name="food" value="food">외식<br>
+												<input type="checkbox" id="food" name="food"  value="food">외식<br>
 												</td>
 												<td>
-												<input type="checkbox" id="cafe" name="cafe" value="cafe">카페<br>
+												<input type="checkbox" id="cafe" name="cafe"  value="cafe">카페<br>
 												</td>
 												<td>
-												<input type="checkbox" id="others" name="others" value="others">기타<br>
+												<input type="checkbox" id="others" name="others"  value="others">기타<br>
 												</td>
 											</tr>
 										</table>
@@ -163,94 +169,98 @@ input[type=checkbox] {
 
 
 
-	<br>
 		<br>
 		<br>
+		<br>
 
-		<table align="center" border="0" cellpadding="5" cellspacing="2 width=" 100%" bordercolordark="white" bordercolorlight="black">
-			<c:choose>
-			<c:when test="${not empty data}">
-			<c:forEach items="${data}" var="card">
-				<br>
-				<hr>
-				<br>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">은행명</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.bankName} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">카드이름</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.cardName} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">이용실적</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.condition}</span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">혜택</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.benefit}</span>
-						</p>
-					</td>
-				</tr>
-				</c:forEach>
-			</c:when>
-				
-								<c:otherwise>
-				<tr>
-					<td colspan="5">
-						<p align="center">
-							<b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-						</p>
-					</td>
-				</tr>
-				</c:otherwise>
-		</c:choose>
+ 		<c:choose>
+            <c:when test="${empty card}">
+            <tr>
+               <td colspan="5">
+                  <p align="center">
+                     <b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
+                  </p>
+               </td>
+            </tr>
+         </c:when>
+         <c:otherwise>
+         <c:forEach items="${card}" var="card">
+         
+           <div class="container-fluid">
+           <div class="row">
+             <div class="col-md-15 mx-auto text-center mb-10 section-heading">
 
+         <br><br>
+         
+        <table frame="void">
+	     <td>
+	     <img src="images/${card.bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	     </td>
+         <td>
+         
+         <table class="table table-bordered">
+            
+            
+            <tr>
+                <td>은행명 </td>
+                <td colspan="2" width="1100" height="50" >${card.bankname}</td>
+            </tr>
+            <tr>
+                <td>카드이름 </td>
+                <td colspan="2">${card.cardname}</td>
+            </tr>
+            
+            <tr>
+                <td>이용조건</td>
+                <td colspan="2">                <c:if test="${card.benefit.condition != 'null'}">
+                ${card.benefit.condition}<br>
+                </c:if></td>
+            </tr>
+            <tr>
+            <tr>
+                <td rowspan="18">혜택 </td>
+                <tr>
+                <td colspan="2">
+                <c:if test="${card.benefit.movie != 'null'}">
+                ${card.benefit.movie}<br>
+                </c:if>
+                <c:if test="${card.benefit.cafe != 'null'}">
+                ${card.benefit.cafe}<br>
+                </c:if>
+                <c:if test="${card.benefit.offshop != 'null'}">
+                ${card.benefit.offshop}<br>
+                </c:if>
+                <c:if test="${card.benefit.onshop != 'null'}">
+                ${card.benefit.onshop}<br>
+                </c:if>
+                <c:if test="${card.benefit.telecom != 'null'}">
+                ${card.benefit.telecom}<br>
+                </c:if>
+                <c:if test="${card.benefit.transportation != 'null'}">
+                ${card.benefit.transportation}<br>
+                </c:if>
+                <c:if test="${card.benefit.food != 'null'}">
+                ${card.benefit.food}<br>
+                </c:if>
+                <c:if test="${card.benefit.others != 'null'}">
+                ${card.benefit.others}<br>
+                </c:if>
+                </td>
+                </tr>
+			</table>
 
-			<tr>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-					</p>
-				</td>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-					</p>
-				</td>
-			</tr>
+		</td>
+         </table>
+         <br><hr><br>
+</div>
+</div>
+</div>
+         </c:forEach>
+  <br><br><br>
 
-		</table>
+            </c:otherwise>
+      </c:choose>
+
 
 
 		<br>

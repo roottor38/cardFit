@@ -13,7 +13,7 @@
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700|Work+Sans:300,400,700" rel="stylesheet">
     <link rel="stylesheet" href="fonts/icomoon/style.css">
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="css/magnific-popup.css">
     <link rel="stylesheet" href="css/jquery-ui.css">
     <link rel="stylesheet" href="css/owl.carousel.min.css">
@@ -43,6 +43,10 @@
         display:block;
         width:100%
     }
+    #pic{
+    	margin: 0px 500px 0px 380px;
+    
+    }
 
    </style>
   </head>
@@ -61,33 +65,165 @@
 <br><br><br>
     
         <form action="/updateCard" method="post" encType="multiplart/form-data">
-<table class="table table-bordered">
-    <tbody>
-            <tr>
-                <td>은행 </td>
-                <td colspan="2"><input type="text" placeholder="${card.bankName}" name="bankName" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td>카드이름 </td>
-                <td colspan="2"><input type="text" placeholder="${card.cardName}" name="cardName" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td>이용조건</td>
-                <td colspan="2"><input type="text" placeholder="${card.condition}" name="condition" class="form-control"/></td>
-            </tr>
-            <tr>
-                <td rowspan="18">혜택 </td>
-                <tr>
 
-                <td><textarea cols="60" rows="6" placeholder="${card.benefit}" name="benefit" class="form-control"></textarea></td>
-                </tr>
-    </tbody>
-</table>
- <input type="submit" class="btn btn-search btn-primary btn-block" value="update">
+
+		     <img  id="pic" src="../images/${card[0].bankname}${card[0].cardname}.jpg" width="350" height="200"><br>
+<br>
+
+
+
+
+        	 <table class="table table-bordered">
+
+	            <tr>
+	                <td>은행명 </td>
+	                <td colspan="2" width="1000" height="50">${card[0].bankname}
+	                <input type="hidden" name="bankname" value="${card[0].bankname}"></td>
+	            </tr>
+	            <tr>
+	                <td>카드이름 </td>
+	                <td colspan="2">${card[0].cardname}
+	                <input type="hidden" name="cardname" value="${card[0].cardname}"></td>
+	            </tr>
+	            
+	            <c:choose>
+            		<c:when test="${card[0].condition eq 'null'}">
+            			            <tr>
+	                <td>이용조건</td>
+	                 <td colspan="2"><input type="text" value="" name="condition" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>이용조건</td>
+	                 <td colspan="2"><input type="text" value="${card[0].condition}" name="condition" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+            	
+            	
+            		            <c:choose>
+            		<c:when test="${card[0].benefit.movie eq 'null'}">
+            			            <tr>
+	                <td>영화</td>
+	                 <td colspan="2"><input type="text"  value="" name="movie" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>영화</td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.movie}" name="condition" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+            	
+            	         		            <c:choose>
+            		<c:when test="${card[0].benefit.cafe eq 'null'}">
+            			            <tr>
+	                <td>카페</td>
+	                 <td colspan="2"><input type="text"  value="" name="cafe" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>카페</td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.cafe}"  name="cafe" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+            	            	         		            <c:choose>
+            		<c:when test="${card[0].benefit.offshop eq 'null'}">
+            			            <tr>
+	                <td>쇼핑</td>
+	                 <td colspan="2"><input type="text"  value=""  name="offshop" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>쇼핑</td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.offshop}" name="offshop" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+            	 <c:choose>
+            		<c:when test="${card[0].benefit.onshop eq 'null'}">
+            			            <tr>
+	                <td>온라인쇼핑</td>
+	                 <td colspan="2"><input type="text"  value=""  name="onshop" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>온라인쇼핑</td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.onshop}" name="onshop" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+            	
+             	 <c:choose>
+            		<c:when test="${card[0].benefit.telecom eq 'null'}">
+            			            <tr>
+	                <td>통신사</td>
+	                 <td colspan="2"><input type="text" value=""  name="telecom" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>통신사</td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.telecom}" name="telecom" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+             	 <c:choose>
+            		<c:when test="${card[0].benefit.transportation eq 'null'}">
+            			            <tr>
+	                <td>대중교통</td>
+	                 <td colspan="2"><input type="text"   value="" name="transportation" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>대중교통</td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.transportation}" name="transportation" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+             	 <c:choose>
+            		<c:when test="${card[0].benefit.food eq 'null'}">
+            			            <tr>
+	                <td>외식</td>
+	                 <td colspan="2"><input type="text"  value=""  name="food" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>외식</td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.food}" name="food" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+            	             	 <c:choose>
+            		<c:when test="${card[0].benefit.others eq 'null'}">
+            			            <tr>
+	                <td>기타</td>
+	                 <td colspan="2"><input type="text" value="" name="others" class="form-control"/></td>
+	           		 </tr>
+            		</c:when>
+            		<c:otherwise>
+            		            <tr>
+	                <td>기타</td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.others}" name="others" class="form-control"/></td>
+	            </tr>
+            		</c:otherwise>
+            	</c:choose>
+
+
+			</table>
  
+ 		<input type="submit" class="btn btn-search btn-primary btn-block" value="update">
  </form>
-  
-  
+ 
+ </div>
   </div>
 
   <script src="js/jquery-3.3.1.min.js"></script>

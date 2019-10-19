@@ -32,20 +32,18 @@
 <link rel="stylesheet" href="css/style.css">
 
 </head>
-<script type="text/javascript">
-
-	function deleteCard(bankName, cardName){
-		alert(cardName);
-	      axios.get("http://localhost:8088/deleteCard?bankName="+bankName+"&cardName="+cardName)
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+	function deleteCard(cardname){
+	      axios.delete("http://localhost:8000/deleteCard/"+cardname)
 	      .then(resData => {
 	                 console.log(resData);
 	      }).catch(error => {
 					console.log("비정상 응답 ", error);
 	      });
-	      alert("카드 삭제 완료");
-		
+	      alert("삭제완료되었습니다.");
+	      document.location.reload();
 	}
-
 </script>
 <body>
 
@@ -96,21 +94,14 @@
 					<div class="col-12" data-aos="fade">
 						<h2 style="color: white">카드 검색하기</h2>
 						<br>
-						<form action="/myCardBenefit" method="post">
+						<form action="/cardControl" method="post">
 							<div class="row mb-3">
 								<div class="col-md-9">
 									<div class="row">
 										<div class="col-md-6 mb-3 mb-md-0">
 											<div class="input-wrap">
-												<select
-													class="form-control form-control-block search-input  border-0 px-4"
-													name="bankName">
-													<option value="신한은행">신한은행</option>
-													<option value="우리은행">우리은행</option>
-													<option value="국민은행">국민은행</option>
-												</select> <br> <input type="text"
-													class="form-control form-control-block search-input  border-0 px-4"
-													name="cardName" placeholder="카드 이름을 입력해주세요">
+<input type="text"	class="form-control form-control-block search-input  border-0 px-4"
+													name="cardname" placeholder="카드 이름을 입력해주세요">
 											</div>
 										</div>
 									</div>
@@ -131,97 +122,101 @@
 		<br>
 		<br>
 
-		<table align="center" border="0" cellpadding="5" cellspacing="2 width=" 100%" bordercolordark="white" bordercolorlight="black">
-			<c:choose>
-				<c:when test="${empty card }">
-				<tr>
-					<td colspan="5">
-						<p align="center">
-							<b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-						</p>
-					</td>
-				</tr>
-			</c:when>
-			<c:otherwise>
-				<br>
-				<hr>
-				<br>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">은행명</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.bankName} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">카드이름</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;"> ${card.cardName} </span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">이용실적</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.condition}</span>
-						</p>
-					</td>
-				</tr>
-				<tr>
-					<td bgcolor="#336699">
-						<p align="center">
-							<font color="white"><b><span style="font-size: 13pt;">혜택</span></b></font>
-						</p>
-					</td>
-					<td bgcolor="">
-						<p align="center">
-							<span style="font-size: 13pt;">${card.benefit}</span>
-						</p>
-					</td>
-				</tr>
-				</c:otherwise>
-		</c:choose>
-		
+ 		<c:choose>
+            <c:when test="${empty card}">
+            <tr>
+               <td colspan="5">
+                  <p align="center">
+                     <b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
+                  </p>
+               </td>
+            </tr>
+         </c:when>
+         <c:otherwise>
+         <c:forEach items="${card}" var="card">
+         
+           <div class="container-fluid">
+           <div class="row">
+             <div class="col-md-15 mx-auto text-center mb-10 section-heading">
 
-			<tr>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-					</p>
-				</td>
-				<td bgcolor="">
-					<p align="center">
-						<span style="font-size: 9pt;"></span>
-					</p>
-				</td>
-			</tr>
-
-		</table>
-		
-		
-					<p align="right">
-						<a href="updateCard/${card.bankName}/${card.cardName}"><span style="font-size: 15pt;">수정하기</span></a>
+         <br><br>
+         
+        <table frame="void">
+	     <td>
+	     <img src="images/${card.bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	     </td>
+         <td>
+         
+         <table class="table table-bordered">
+            
+            
+            <tr>
+                <td>은행명 </td>
+                <td colspan="2" width="1100" height="50" >${card.bankname}</td>
+            </tr>
+            <tr>
+                <td>카드이름 </td>
+                <td colspan="2">${card.cardname}</td>
+            </tr>
+            
+            <tr>
+                <td>이용조건</td>
+                <td colspan="2">                <c:if test="${card.benefit.condition != 'null'}">
+                ${card.benefit.condition}<br>
+                </c:if></td>
+            </tr>
+            <tr>
+            <tr>
+                <td rowspan="18">혜택 </td>
+                <tr>
+                <td colspan="2">
+                <c:if test="${card.benefit.movie != 'null'}">
+                ${card.benefit.movie}<br>
+                </c:if>
+                <c:if test="${card.benefit.cafe != 'null'}">
+                ${card.benefit.cafe}<br>
+                </c:if>
+                <c:if test="${card.benefit.offshop != 'null'}">
+                ${card.benefit.offshop}<br>
+                </c:if>
+                <c:if test="${card.benefit.onshop != 'null'}">
+                ${card.benefit.onshop}<br>
+                </c:if>
+                <c:if test="${card.benefit.telecom != 'null'}">
+                ${card.benefit.telecom}<br>
+                </c:if>
+                <c:if test="${card.benefit.transportation != 'null'}">
+                ${card.benefit.transportation}<br>
+                </c:if>
+                <c:if test="${card.benefit.food != 'null'}">
+                ${card.benefit.food}<br>
+                </c:if>
+                <c:if test="${card.benefit.others != 'null'}">
+                ${card.benefit.others}<br>
+                </c:if>
+                </td>
+                </tr>
+			</table>
+			
+								<p align="right">
+						<a href="updateCard/${card.cardname}"><span style="font-size: 15pt;">수정하기</span></a>
 					</p>
 
 					
 					<p align="right">
-						<a  href="deleteCard/${card.bankName}/${card.cardName}"><span style="font-size: 15pt;">삭제하기</span></a>
+						<a  href="javascript:deleteCard('${card.cardname}')"><span style="font-size: 15pt;">삭제하기</span></a>
 					</p>
+		</td>
+         </table>
+         <br><hr><br>
+</div>
+</div>
+</div>
+         </c:forEach>
+  <br><br><br>
+
+            </c:otherwise>
+      </c:choose>
 
 		
 
