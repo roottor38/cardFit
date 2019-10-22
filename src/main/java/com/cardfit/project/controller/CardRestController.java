@@ -23,10 +23,7 @@ public class CardRestController {
 	
 	@DeleteMapping("deleteCard/{cardname}")
 	public void deleteCard(@PathVariable String cardname) {
-		System.out.println(cardname);
 		service.deleteCard("cardname", cardname);
 	}
-	
-
-	
 }
+	

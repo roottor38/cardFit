@@ -28,5 +28,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/0.encore/00.lib/ojdbc6.jar"/>
+	<classpathentry kind="lib" path="C:/0.encore/00.lib/REngine.jar"/>
+	<classpathentry kind="lib" path="C:/0.encore/00.lib/Rserve.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

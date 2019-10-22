@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -31,8 +31,7 @@
     <link rel="stylesheet" href="css/style.css">
     
   </head>
-  
-  
+
   <body>
   
   <div class="site-wrap">
@@ -47,7 +46,7 @@
     </div> <!-- .site-mobile-menu -->
     
     
-     <div class="site-navbar-wrap js-site-navbar bg-white">
+    <div class="site-navbar-wrap js-site-navbar bg-white">
       <div class="container">
         <div class="site-navbar bg-light">
           <div class="py-1">
@@ -61,13 +60,13 @@
                     <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
 
                     <ul class="site-menu js-clone-nav d-none d-lg-block">
-                                          <li><a href="/insight">인사이트</a></li>
+                      <li><a href="/insight" >인사이트</a></li>
                       <li><a href="/myCardBenefit">내 카드 혜택보기</a></li>
                     <li class="has-children">
-                       <a >카드 추천받기</a>
+                       <a>카드 추천받기</a>
                        <ul class="dropdown arrow-top">
-                          <li><a href="/keyword">키워드로 추천받기</a></li>
-                          <li><a href="/option">옵션으로 추천받기</a></li>
+                          <li><a href="/keyword" >키워드로 추천받기</a></li>
+                          <li><a href="/option" >옵션으로 추천받기</a></li>
                         </ul>
                       </li>
                       <li><a href="contact.html">문의하기</a></li>
@@ -83,21 +82,19 @@
   
     <div style="height: 113px;"></div>
 
-<div class="site-blocks-cover overlay" style="background-image: url('images/hero_1.jpg');" data-aos="fade" data-stellar-background-ratio="0.5">
+    <div class="site-blocks-cover overlay" style="background-image: url('images/hero_1.jpg');" data-aos="fade" data-stellar-background-ratio="0.5">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-12" data-aos="fade">
-            <h2 style="color:white">키워드로 추천받기</h2>
+            <h2 style="color:white">CardFit 방문을 환영합니다.</h2>
             <br>
-            <form action="/keyword" method="post">
               <div class="row mb-3">
                 <div class="col-md-9">
                   <div class="row">
-
                     <div class="col-md-6 mb-3 mb-md-0">
                       <div class="input-wrap">
-                        
-                      <input type="text" class="form-control form-control-block search-input  border-0 px-4" name="search" placeholder="원하는 정보를 입력해주세요." onFocus="geolocate()">
+                      
+	
                       </div>
                     </div>
                   </div>
@@ -105,121 +102,88 @@
                 </div>
                 
                 <div class="col-md-3">
-                  <input type="submit" class="btn btn-search btn-primary btn-block" value="Search">
                 </div>
               </div>
-              
-            </form>
           </div>
         </div>
       </div>
     </div>
-
-
-		<br>
-		<br>
-		<br>
-
- 		<c:choose>
-            <c:when test="${empty card}">
-            <tr>
-               <td colspan="5">
-                  <p align="center">
-                     <b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-                  </p>
-               </td>
-            </tr>
-         </c:when>
-         <c:otherwise>
-         <c:forEach items="${card}" var="card">
-         
-           <div class="container-fluid">
-           <div class="row">
-             <div class="col-md-15 mx-auto text-center mb-10 section-heading">
-
-         <br><br>
-         
-        <table frame="void">
-	     <td>
-	     <img src="images/${card.bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	     </td>
-         <td>
-         
-         <table class="table table-bordered">
-            
-            
-            <tr>
-                <td>은행명 </td>
-                <td colspan="2" width="1100" height="50" >${card.bankname}</td>
-            </tr>
-            <tr>
-                <td>카드이름 </td>
-                <td colspan="2">${card.cardname}</td>
-            </tr>
-            
-            <tr>
-                <td>이용조건</td>
-                <td colspan="2">                <c:if test="${card.benefit.condition != 'null'}">
-                ${card.benefit.condition}<br>
-                </c:if></td>
-            </tr>
-            <tr>
-            <tr>
-                <td rowspan="18">혜택 </td>
-                <tr>
-                <td colspan="2">
-                <c:if test="${card.benefit.movie != 'null'}">
-                ${card.benefit.movie}<br>
-                </c:if>
-                <c:if test="${card.benefit.cafe != 'null'}">
-                ${card.benefit.cafe}<br>
-                </c:if>
-                <c:if test="${card.benefit.offshop != 'null'}">
-                ${card.benefit.offshop}<br>
-                </c:if>
-                <c:if test="${card.benefit.onshop != 'null'}">
-                ${card.benefit.onshop}<br>
-                </c:if>
-                <c:if test="${card.benefit.telecom != 'null'}">
-                ${card.benefit.telecom}<br>
-                </c:if>
-                <c:if test="${card.benefit.transportation != 'null'}">
-                ${card.benefit.transportation}<br>
-                </c:if>
-                <c:if test="${card.benefit.food != 'null'}">
-                ${card.benefit.food}<br>
-                </c:if>
-                <c:if test="${card.benefit.others != 'null'}">
-                ${card.benefit.others}<br>
-                </c:if>
-                </td>
-                </tr>
-			</table>
-			
-		</td>
-         </table>
-         <br><hr><br>
-</div>
-</div>
-</div>
-         </c:forEach>
-  <br><br><br>
-
-            </c:otherwise>
-      </c:choose>
-
-
-
-		<br>
-		<br>
-		<br>
-
     
 
+    <div class="site-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 mx-auto text-center mb-5 section-heading">
+            <h2 class="mb-5">검색 인기 카드</h2>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="100">
+            <a href="#" class="h-100 feature-item">
+              <span class="d-block icon flaticon-calculator mb-3 text-primary"></span>
+              <h2>${card[0].name}</h2>
+              <span class="counting">10,391</span>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="200">
+            <a href="#" class="h-100 feature-item">
+              <span class="d-block icon flaticon-wrench mb-3 text-primary"></span>
+              <h2>외식</h2>
+              <span class="counting">192</span>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="300">
+            <a href="#" class="h-100 feature-item">
+              <span class="d-block icon flaticon-worker mb-3 text-primary"></span>
+              <h2>대중교통</h2>
+              <span class="counting">1,021</span>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="400">
+            <a href="#" class="h-100 feature-item">
+              <span class="d-block icon flaticon-telecommunications mb-3 text-primary"></span>
+              <h2>통신사</h2>
+              <span class="counting">1,219</span>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="500">
+            <a href="#" class="h-100 feature-item">
+              <span class="d-block icon flaticon-stethoscope mb-3 text-primary"></span>
+              <h2>쇼핑</h2>
+              <span class="counting">482</span>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="600">
+            <a href="#" class="h-100 feature-item">
+              <span class="d-block icon flaticon-computer-graphic mb-3 text-primary"></span>
+              <h2>카페</h2>
+              <span class="counting">5,409</span>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="700">
+            <a href="#" class="h-100 feature-item">
+              <span class="d-block icon flaticon-trolley mb-3 text-primary"></span>
+              <h2>도서</h2>
+              <span class="counting">291</span>
+            </a>
+          </div>
+          <div class="col-sm-6 col-md-4 col-lg-3 mb-3" data-aos="fade-up" data-aos-delay="800">
+            <a href="#" class="h-100 feature-item">
+              <span class="d-block icon flaticon-restaurant mb-3 text-primary"></span>
+              <h2>금융</h2>
+              <span class="counting">329</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+   
+    
     <footer class="site-footer">
       <div class="container">
-        
-
         <div class="row">
           <div class="col-md-4">
             <h3 class="footer-heading mb-4 text-white">About</h3>
@@ -295,7 +259,8 @@
   <script src="js/mediaelement-and-player.min.js"></script>
 
   <script src="js/main.js"></script>
-    
+  
+
 
   <script>
       document.addEventListener('DOMContentLoaded', function() {

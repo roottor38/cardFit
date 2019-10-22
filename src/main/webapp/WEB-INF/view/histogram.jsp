@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,8 +29,6 @@
     <link rel="stylesheet" href="css/style.css">
     
   </head>
-  
-  
   <body>
   
   <div class="site-wrap">
@@ -47,13 +43,13 @@
     </div> <!-- .site-mobile-menu -->
     
     
-     <div class="site-navbar-wrap js-site-navbar bg-white">
+      <div class="site-navbar-wrap js-site-navbar bg-white">
       <div class="container">
         <div class="site-navbar bg-light">
           <div class="py-1">
             <div class="row align-items-center">
               <div class="col-2">
-                <div class="mb-0 site-logo"><a href="/index">Card<strong class="font-weight-bold">Fit</strong> </a></div>
+                <div class="mb-0 site-logo"><a href="index.html">Card<strong class="font-weight-bold">Fit</strong> </a></div>
               </div>
               <div class="col-10">
                 <nav class="site-navigation text-right" role="navigation">
@@ -61,7 +57,7 @@
                     <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
 
                     <ul class="site-menu js-clone-nav d-none d-lg-block">
-                                          <li><a href="/insight">인사이트</a></li>
+                                          <li><a href="about.html">CardFit 소개</a></li>
                       <li><a href="/myCardBenefit">내 카드 혜택보기</a></li>
                     <li class="has-children">
                        <a >카드 추천받기</a>
@@ -83,139 +79,120 @@
   
     <div style="height: 113px;"></div>
 
-<div class="site-blocks-cover overlay" style="background-image: url('images/hero_1.jpg');" data-aos="fade" data-stellar-background-ratio="0.5">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-12" data-aos="fade">
-            <h2 style="color:white">키워드로 추천받기</h2>
-            <br>
-            <form action="/keyword" method="post">
-              <div class="row mb-3">
-                <div class="col-md-9">
-                  <div class="row">
+    <div class="unit-5 overlay" style="background-image: url('images/hero_1.jpg');">
+      <div class="container text-center">
+        <h2 class="mb-0">Post a Job</h2>
+        <p class="mb-0 unit-6"><a href="index.html">Home</a> <span class="sep">></span> <span>Post a Job</span></p>
+      </div>
+    </div>
 
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <div class="input-wrap">
-                        
-                      <input type="text" class="form-control form-control-block search-input  border-0 px-4" name="search" placeholder="원하는 정보를 입력해주세요." onFocus="geolocate()">
-                      </div>
-                    </div>
-                  </div>
-                  
-                </div>
-                
-                <div class="col-md-3">
-                  <input type="submit" class="btn btn-search btn-primary btn-block" value="Search">
-                </div>
-              </div>
-              
-            </form>
+    
+    
+
+    <div class="site-section bg-light">
+      <div class="container">
+        <div class="row">
+       
+          <div class="col-md-12 col-lg-8 mb-5">
+            
+          	<img src="*/Users/Playdata/Documents/logo_2.png">
+            
+          </div>
+
+          <div class="col-lg-4">
+            <div class="p-4 mb-3 bg-white">
+              <h3 class="h5 text-black mb-3">Contact Info</h3>
+              <p class="mb-0 font-weight-bold">Address</p>
+              <p class="mb-4">203 Fake St. Mountain View, San Francisco, California, USA</p>
+
+              <p class="mb-0 font-weight-bold">Phone</p>
+              <p class="mb-4"><a href="#">+1 232 3235 324</a></p>
+
+              <p class="mb-0 font-weight-bold">Email Address</p>
+              <p class="mb-0"><a href="#">youremail@domain.com</a></p>
+
+            </div>
+            
+            <div class="p-4 mb-3 bg-white">
+              <h3 class="h5 text-black mb-3">More Info</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa ad iure porro mollitia architecto hic consequuntur. Distinctio nisi perferendis dolore, ipsa consectetur</p>
+              <p><a href="#" class="btn btn-primary  py-2 px-4">Learn More</a></p>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
+   
 
-		<br>
-		<br>
-		<br>
 
- 		<c:choose>
-            <c:when test="${empty card}">
-            <tr>
-               <td colspan="5">
-                  <p align="center">
-                     <b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-                  </p>
-               </td>
-            </tr>
-         </c:when>
-         <c:otherwise>
-         <c:forEach items="${card}" var="card">
-         
-           <div class="container-fluid">
-           <div class="row">
-             <div class="col-md-15 mx-auto text-center mb-10 section-heading">
+    <div class="site-section">
+      <div class="container">
+        <div class="row justify-content-center text-center mb-5">
+          <div class="col-md-6" data-aos="fade" >
+            <h2>Frequently Ask Questions</h2>
+          </div>
+        </div>
+        
 
-         <br><br>
-         
-        <table frame="void">
-	     <td>
-	     <img src="images/${card.bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	     </td>
-         <td>
-         
-         <table class="table table-bordered">
+        <div class="row justify-content-center" data-aos="fade" data-aos-delay="100">
+          <div class="col-md-8">
+            <div class="accordion unit-8" id="accordion">
+            <div class="accordion-item">
+              <h3 class="mb-0 heading">
+                <a class="btn-block" data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">What is the name of your company<span class="icon"></span></a>
+              </h3>
+              <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="body-text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur quae cumque perspiciatis aperiam accusantium facilis provident aspernatur nisi optio debitis dolorum, est eum eligendi vero aut ad necessitatibus nulla sit labore doloremque magnam! Ex molestiae, dolor tempora, ad fuga minima enim mollitia consequuntur, necessitatibus praesentium eligendi officia recusandae culpa tempore eaque quasi ullam magnam modi quidem in amet. Quod debitis error placeat, tempore quasi aliquid eaque vel facilis culpa voluptate.</p>
+                </div>
+              </div>
+            </div> <!-- .accordion-item -->
             
-            
-            <tr>
-                <td>은행명 </td>
-                <td colspan="2" width="1100" height="50" >${card.bankname}</td>
-            </tr>
-            <tr>
-                <td>카드이름 </td>
-                <td colspan="2">${card.cardname}</td>
-            </tr>
-            
-            <tr>
-                <td>이용조건</td>
-                <td colspan="2">                <c:if test="${card.benefit.condition != 'null'}">
-                ${card.benefit.condition}<br>
-                </c:if></td>
-            </tr>
-            <tr>
-            <tr>
-                <td rowspan="18">혜택 </td>
-                <tr>
-                <td colspan="2">
-                <c:if test="${card.benefit.movie != 'null'}">
-                ${card.benefit.movie}<br>
-                </c:if>
-                <c:if test="${card.benefit.cafe != 'null'}">
-                ${card.benefit.cafe}<br>
-                </c:if>
-                <c:if test="${card.benefit.offshop != 'null'}">
-                ${card.benefit.offshop}<br>
-                </c:if>
-                <c:if test="${card.benefit.onshop != 'null'}">
-                ${card.benefit.onshop}<br>
-                </c:if>
-                <c:if test="${card.benefit.telecom != 'null'}">
-                ${card.benefit.telecom}<br>
-                </c:if>
-                <c:if test="${card.benefit.transportation != 'null'}">
-                ${card.benefit.transportation}<br>
-                </c:if>
-                <c:if test="${card.benefit.food != 'null'}">
-                ${card.benefit.food}<br>
-                </c:if>
-                <c:if test="${card.benefit.others != 'null'}">
-                ${card.benefit.others}<br>
-                </c:if>
-                </td>
-                </tr>
-			</table>
-			
-		</td>
-         </table>
-         <br><hr><br>
-</div>
-</div>
-</div>
-         </c:forEach>
-  <br><br><br>
+            <div class="accordion-item">
+              <h3 class="mb-0 heading">
+                <a class="btn-block" data-toggle="collapse" href="#collapseTwo" role="button" aria-expanded="false" aria-controls="collapseTwo">How much pay for 3  months?<span class="icon"></span></a>
+              </h3>
+              <div id="collapseTwo" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="body-text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
+                </div>
+              </div>
+            </div> <!-- .accordion-item -->
 
-            </c:otherwise>
-      </c:choose>
+            <div class="accordion-item">
+              <h3 class="mb-0 heading">
+                <a class="btn-block" data-toggle="collapse" href="#collapseThree" role="button" aria-expanded="false" aria-controls="collapseThree">Do I need to register?  <span class="icon"></span></a>
+              </h3>
+              <div id="collapseThree" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="body-text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
+                </div>
+              </div>
+            </div> <!-- .accordion-item -->
 
+            <div class="accordion-item">
+              <h3 class="mb-0 heading">
+                <a class="btn-block" data-toggle="collapse" href="#collapseFour" role="button" aria-expanded="false" aria-controls="collapseFour">Who should I contact in case of support.<span class="icon"></span></a>
+              </h3>
+              <div id="collapseFour" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="body-text">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vel ad laborum expedita. Nostrum iure atque enim quisquam minima distinctio omnis, consequatur aliquam suscipit, quidem, esse aspernatur! Libero, excepturi animi repellendus porro impedit nihil in doloremque a quaerat enim voluptatum, perspiciatis, quas dignissimos maxime ut cum reiciendis eius dolorum voluptatem aliquam!</p>
+                </div>
+              </div>
+            </div> <!-- .accordion-item -->
 
-
-		<br>
-		<br>
-		<br>
+          </div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
 
     
 
+
+    
     <footer class="site-footer">
       <div class="container">
         

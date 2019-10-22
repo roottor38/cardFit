@@ -36,11 +36,6 @@
 
 </head>
 <script type="text/javascript">
-function check(){
-	alert(1);
-	return false;
-	}
-}
 </script>
 <style type="text/css">
 input[type=checkbox] {
@@ -73,7 +68,7 @@ input[type=checkbox] {
 						<div class="row align-items-center">
 							<div class="col-2">
 								<div class="mb-0 site-logo">
-									<a href="index.html">Card<strong class="font-weight-bold">Fit</strong>
+									<a href="/index">Card<strong class="font-weight-bold">Fit</strong>
 									</a>
 								</div>
 							</div>
@@ -87,7 +82,7 @@ input[type=checkbox] {
 										</div>
 
 										<ul class="site-menu js-clone-nav d-none d-lg-block">
-											<li><a href="about.html">CardFit 소개</a></li>
+											<li><a href="/insight">인사이트</a></li>
 											<li><a href="myCardBenefit">내 카드 혜택보기</a></li>
 											<li class="has-children"><a>카드 추천받기</a>
 												<ul class="dropdown arrow-top">
@@ -116,7 +111,7 @@ input[type=checkbox] {
 						<h2 style="color: white">옵션으로 추천받기</h2>
 						<br>
 						
-						<form action="/option" method="post" style="color:white" onsubmit="check()">
+						<form action="/option" method="post" style="color:white">
 							<div class="row mb-3">
 								<div class="col-md-9">
 									<div class="row">

@@ -59,6 +59,7 @@ function check(){
 		alert("필수 입력정보를 확인해주세요.");
 		return false;
 	}else{
+		alert("카드가 등록되었습니다.")
     	return true; 
 	}
 }

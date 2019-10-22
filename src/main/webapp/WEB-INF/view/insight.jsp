@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,6 +32,32 @@
     
   </head>
   
+  <style type="text/css">
+       .studentInfo {
+           width: 500px;
+           border-collapse: collapse;
+       }
+ 
+           .studentInfo td {
+               border: 1px solid black;
+           }
+ 
+           .studentInfo tr:nth-child(even) {
+               background-color: #E4FFB7;
+           }
+ 
+           .studentInfo tr:nth-child(odd) {
+                background-color: #EFFFD2;
+           }
+ 
+ 
+       .header {
+           text-align: center;
+           font-weight: bolder;
+           background-color: #80B327;
+           color: white;
+       }
+  </style>
   
   <body>
   
@@ -47,175 +73,153 @@
     </div> <!-- .site-mobile-menu -->
     
     
-     <div class="site-navbar-wrap js-site-navbar bg-white">
-      <div class="container">
-        <div class="site-navbar bg-light">
-          <div class="py-1">
-            <div class="row align-items-center">
-              <div class="col-2">
-                <div class="mb-0 site-logo"><a href="/index">Card<strong class="font-weight-bold">Fit</strong> </a></div>
-              </div>
-              <div class="col-10">
-                <nav class="site-navigation text-right" role="navigation">
-                  <div class="container">
-                    <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3"><a href="#" class="site-menu-toggle js-menu-toggle text-black"><span class="icon-menu h3"></span></a></div>
+   <div class="site-navbar-wrap js-site-navbar bg-white">
+			<div class="container">
+				<div class="site-navbar bg-light">
+					<div class="py-1">
+						<div class="row align-items-center">
+							<div class="col-2">
+								<div class="mb-0 site-logo">
+									<a href="/index">Card<strong class="font-weight-bold">Fit</strong>
+									</a>
+								</div>
+							</div>
+							<div class="col-10">
+								<nav class="site-navigation text-right" role="navigation">
+									<div class="container">
+										<div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3">
+											<a href="#"
+												class="site-menu-toggle js-menu-toggle text-black"><span
+												class="icon-menu h3"></span></a>
+										</div>
 
-                    <ul class="site-menu js-clone-nav d-none d-lg-block">
-                                          <li><a href="/insight">인사이트</a></li>
-                      <li><a href="/myCardBenefit">내 카드 혜택보기</a></li>
-                    <li class="has-children">
-                       <a >카드 추천받기</a>
-                       <ul class="dropdown arrow-top">
-                          <li><a href="/keyword">키워드로 추천받기</a></li>
-                          <li><a href="/option">옵션으로 추천받기</a></li>
-                        </ul>
-                      </li>
-                      <li><a href="contact.html">문의하기</a></li>
-                    </ul>
-                  </div>
-                </nav>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+										<ul class="site-menu js-clone-nav d-none d-lg-block">
+											<li><a href="/insight">인사이트</a></li>
+											<li><a href="/myCardBenefit">내 카드 혜택보기</a></li>
+											<li class="has-children"><a>카드 추천받기</a>
+												<ul class="dropdown arrow-top">
+													<li><a href="/keyword">키워드로 추천받기</a></li>
+													<li><a href="/option">옵션으로 추천받기</a></li>
+												</ul></li>
+											<li><a href="contact.html">문의하기</a></li>
+										</ul>
+									</div>
+								</nav>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
   
     <div style="height: 113px;"></div>
 
-<div class="site-blocks-cover overlay" style="background-image: url('images/hero_1.jpg');" data-aos="fade" data-stellar-background-ratio="0.5">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-12" data-aos="fade">
-            <h2 style="color:white">키워드로 추천받기</h2>
-            <br>
-            <form action="/keyword" method="post">
-              <div class="row mb-3">
-                <div class="col-md-9">
-                  <div class="row">
-
-                    <div class="col-md-6 mb-3 mb-md-0">
-                      <div class="input-wrap">
-                        
-                      <input type="text" class="form-control form-control-block search-input  border-0 px-4" name="search" placeholder="원하는 정보를 입력해주세요." onFocus="geolocate()">
-                      </div>
-                    </div>
-                  </div>
-                  
-                </div>
-                
-                <div class="col-md-3">
-                  <input type="submit" class="btn btn-search btn-primary btn-block" value="Search">
-                </div>
-              </div>
-              
-            </form>
-          </div>
-        </div>
+    <div class="unit-5 overlay" style="background-image: url('images/hero_1.jpg');">
+      <div class="container text-center">
+        <h2 class="mb-0">인사이트</h2>
+        <p class="mb-0 unit-6"><a href="index.html">데이터 분석</a></p>
       </div>
     </div>
 
-
-		<br>
-		<br>
-		<br>
-
- 		<c:choose>
-            <c:when test="${empty card}">
-            <tr>
-               <td colspan="5">
-                  <p align="center">
-                     <b><span style="font-size: 13pt;">검색된 카드가 없습니다.</span></b>
-                  </p>
-               </td>
-            </tr>
-         </c:when>
-         <c:otherwise>
-         <c:forEach items="${card}" var="card">
-         
-           <div class="container-fluid">
-           <div class="row">
-             <div class="col-md-15 mx-auto text-center mb-10 section-heading">
-
-         <br><br>
-         
-        <table frame="void">
-	     <td>
-	     <img src="images/${card.bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	     </td>
-         <td>
-         
-         <table class="table table-bordered">
-            
-            
-            <tr>
-                <td>은행명 </td>
-                <td colspan="2" width="1100" height="50" >${card.bankname}</td>
-            </tr>
-            <tr>
-                <td>카드이름 </td>
-                <td colspan="2">${card.cardname}</td>
-            </tr>
-            
-            <tr>
-                <td>이용조건</td>
-                <td colspan="2">                <c:if test="${card.benefit.condition != 'null'}">
-                ${card.benefit.condition}<br>
-                </c:if></td>
-            </tr>
-            <tr>
-            <tr>
-                <td rowspan="18">혜택 </td>
-                <tr>
-                <td colspan="2">
-                <c:if test="${card.benefit.movie != 'null'}">
-                ${card.benefit.movie}<br>
-                </c:if>
-                <c:if test="${card.benefit.cafe != 'null'}">
-                ${card.benefit.cafe}<br>
-                </c:if>
-                <c:if test="${card.benefit.offshop != 'null'}">
-                ${card.benefit.offshop}<br>
-                </c:if>
-                <c:if test="${card.benefit.onshop != 'null'}">
-                ${card.benefit.onshop}<br>
-                </c:if>
-                <c:if test="${card.benefit.telecom != 'null'}">
-                ${card.benefit.telecom}<br>
-                </c:if>
-                <c:if test="${card.benefit.transportation != 'null'}">
-                ${card.benefit.transportation}<br>
-                </c:if>
-                <c:if test="${card.benefit.food != 'null'}">
-                ${card.benefit.food}<br>
-                </c:if>
-                <c:if test="${card.benefit.others != 'null'}">
-                ${card.benefit.others}<br>
-                </c:if>
-                </td>
-                </tr>
-			</table>
-			
-		</td>
-         </table>
-         <br><hr><br>
-</div>
-</div>
-</div>
-         </c:forEach>
-  <br><br><br>
-
-            </c:otherwise>
-      </c:choose>
-
-
-
-		<br>
-		<br>
-		<br>
-
+    
     
 
+  <br><br><br>
+  
+  
+      <div class="container text-center">
+  <table class="studentInfo">
+        <tbody><tr>
+            <td class="header" colspan="6">STUDENTS MARK SHEET</td>
+        </tr>
+        <tr class="mainRow">
+            <td>연령/성별</td>
+            <td>영화</td>
+			<td>카페</td>
+			<td>통신사</td>
+			<td>대중교통</td>
+			<td>쇼핑</td>
+			<td>온라인쇼핑</td>
+			<td>외식</td>
+			<td>기타</td>
+        </tr>
+        <tr class="altRow">
+            <td>20대 남성</td>
+            <td>${data[0].movie}</td>
+            <td>${data[0].cafe}</td>
+            <td>${data[0].telecom}</td>
+            <td>${data[0].transportation}</td>
+            <td>${data[0].onshop}</td>
+            <td>${data[0].offshop}</td>
+            <td>${data[0].food}</td>
+  	        <td>${data[0].others}</td>  
+        </tr>
+        <tr>
+            <td>30대 남성</td>
+            <td>${data[1].movie}</td>
+            <td>${data[1].cafe}</td>
+            <td>${data[1].telecom}</td>
+            <td>${data[1].transportation}</td>
+            <td>${data[1].onshop}</td>
+            <td>${data[1].offshop}</td>
+            <td>${data[1].food}</td>
+  	        <td>${data[1].others}</td>  
+        </tr>
+        <tr>
+            <td>40대 남성</td>
+             <td>${data[2].movie}</td>
+            <td>${data[2].cafe}</td>
+            <td>${data[2].telecom}</td>
+            <td>${data[2].transportation}</td>
+            <td>${data[2].onshop}</td>
+            <td>${data[2].offshop}</td>
+            <td>${data[2].food}</td>
+  	        <td>${data[2].others}</td>  
+        </tr>
+        <tr>
+            <td>20대 여성</td>
+            <td>${data[3].movie}</td>
+            <td>${data[3].cafe}</td>
+            <td>${data[3].telecom}</td>
+            <td>${data[3].transportation}</td>
+            <td>${data[3].onshop}</td>
+            <td>${data[3].offshop}</td>
+            <td>${data[3].food}</td>
+  	        <td>${data[3].others}</td>  
+        </tr>
+        <tr>
+            <td>30대 여성</td>
+            <td>${data[4].movie}</td>
+            <td>${data[4].cafe}</td>
+            <td>${data[4].telecom}</td>
+            <td>${data[4].transportation}</td>
+            <td>${data[4].onshop}</td>
+            <td>${data[4].offshop}</td>
+            <td>${data[4].food}</td>
+  	        <td>${data[4].others}</td>  
+        </tr>        
+        <tr>
+            <td>40대 여성</td>
+            <td>${data[5].movie}</td>
+            <td>${data[5].cafe}</td>
+            <td>${data[5].telecom}</td>
+            <td>${data[5].transportation}</td>
+            <td>${data[5].onshop}</td>
+            <td>${data[5].offshop}</td>
+            <td>${data[5].food}</td>
+  	        <td>${data[5].others}</td>  
+        </tr>
+    </tbody>
+    </table>
+  
+  
+ 	<button onclick="location.href='/histogram'">히스토그램 보기</button>
+  
+        </div>
+  <br><br><br>
+
+
+    
     <footer class="site-footer">
       <div class="container">
         

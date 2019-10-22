@@ -7,8 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Count{
-	private String customer;
+public class Summation {
+	
 	private long movie;
 	private long cafe;
 	private long telecom;

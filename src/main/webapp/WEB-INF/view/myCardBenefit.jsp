@@ -55,7 +55,7 @@
 						<div class="row align-items-center">
 							<div class="col-2">
 								<div class="mb-0 site-logo">
-									<a href="index.html">Card<strong class="font-weight-bold">Fit</strong>
+									<a href="/index">Card<strong class="font-weight-bold">Fit</strong>
 									</a>
 								</div>
 							</div>
@@ -69,7 +69,7 @@
 										</div>
 
 										<ul class="site-menu js-clone-nav d-none d-lg-block">
-											<li><a href="about.html">CardFit 소개</a></li>
+											<li><a href="/insight">인사이트</a></li>
 											<li><a href="/myCardBenefit">내 카드 혜택보기</a></li>
 											<li class="has-children"><a>카드 추천받기</a>
 												<ul class="dropdown arrow-top">
@@ -97,7 +97,7 @@
 					<div class="col-12" data-aos="fade">
 						<h2 style="color: white">내 카드 검색하기</h2>
 						<br>
-						<form action="/myCardBenefit" method="post">
+						<form action="myCardBenefit" method="post">
 							<div class="row mb-3">
 								<div class="col-md-9">
 									<div class="row">
@@ -105,7 +105,7 @@
 											<div class="input-wrap">
 												<input type="text"
 													class="form-control form-control-block search-input  border-0 px-4"
-													name="cardname" placeholder="카드 이름을 입력해주세요">
+													id="cardname" name="cardname" placeholder="카드 이름을 입력해주세요">
 											</div>
 										</div>
 									</div>
@@ -163,7 +163,6 @@
                 <td>카드이름 </td>
                 <td colspan="2">${card.cardname}</td>
             </tr>
-            
 <tr>
                 <td>이용조건</td>
                 <td colspan="2">                <c:if test="${card.benefit.condition != 'null'}">

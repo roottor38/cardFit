@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ELConfiguration {
 	public RestHighLevelClient clientConnection() {
-		RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost("127.0.0.1", 9200, "http")));
+		RestHighLevelClient client = new RestHighLevelClient(RestClient.builder(new HttpHost("192.168.22.85", 9200, "http")));
 		return client;
 	}
 }
