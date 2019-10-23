@@ -67,7 +67,7 @@
         <form action="/updateCard" method="post" encType="multiplart/form-data">
 
 
-		     <img  id="pic" src="../images/${card[0].bankname}${card[0].cardname}.jpg" width="350" height="200"><br>
+		     <img  id="pic" src="../images/${card[0].bankname}${card[0].cardname}.png" width="350" height="200"><br>
 <br>
 
 
@@ -110,7 +110,7 @@
             		<c:otherwise>
             		            <tr>
 	                <td>영화</td>
-	                 <td colspan="2"><input type="text" value="${card[0].benefit.movie}" name="condition" class="form-control"/></td>
+	                 <td colspan="2"><input type="text" value="${card[0].benefit.movie}" name="movie" class="form-control"/></td>
 	            </tr>
             		</c:otherwise>
             	</c:choose>

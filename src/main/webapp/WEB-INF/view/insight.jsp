@@ -29,9 +29,41 @@
     <link rel="stylesheet" href="css/aos.css">
 
     <link rel="stylesheet" href="css/style.css">
-    
   </head>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script type="text/javascript">
+
   
+  function histogram(){
+      axios.post("http://localhost:8000/histogram/total")
+      .then(resData => {
+                 console.log(resData);
+      }).catch(error => {
+            console.log("비정상 응답 ", error);
+      });
+      document.getElementById("printhistogram").innerHTML ="<img src=\"../images/histogram.png\" width = 550px height = 400px >";
+}
+  
+  function Genderhistogram(){
+      axios.post("http://localhost:8000/histogram/gender")
+      .then(resData => {
+                 console.log(resData);
+      }).catch(error => {
+            console.log("비정상 응답 ", error);
+      });
+      document.getElementById("printhistogram").innerHTML ="<img src=\"../images/Genderhistogram.png\" width = 600px height = 400px >";
+}
+  
+  function Agehistogram(){
+      axios.post("http://localhost:8000/histogram/age")
+      .then(resData => {
+                 console.log(resData);
+      }).catch(error => {
+            console.log("비정상 응답 ", error);
+      });
+      document.getElementById("printhistogram").innerHTML ="<img src=\"../images/Agehistogram.png\" width = 600px height = 400px >";
+}
+  </script>
   <style type="text/css">
        .studentInfo {
            width: 500px;
@@ -57,6 +89,14 @@
            background-color: #80B327;
            color: white;
        }
+       
+       #mydata{
+       margin: 0px 450px 0px 300px;
+       }
+       
+/       #printhistogram{
+       margin: 0px 450px 10px 10px;
+       } 
   </style>
   
   <body>
@@ -74,43 +114,43 @@
     
     
    <div class="site-navbar-wrap js-site-navbar bg-white">
-			<div class="container">
-				<div class="site-navbar bg-light">
-					<div class="py-1">
-						<div class="row align-items-center">
-							<div class="col-2">
-								<div class="mb-0 site-logo">
-									<a href="/index">Card<strong class="font-weight-bold">Fit</strong>
-									</a>
-								</div>
-							</div>
-							<div class="col-10">
-								<nav class="site-navigation text-right" role="navigation">
-									<div class="container">
-										<div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3">
-											<a href="#"
-												class="site-menu-toggle js-menu-toggle text-black"><span
-												class="icon-menu h3"></span></a>
-										</div>
+         <div class="container">
+            <div class="site-navbar bg-light">
+               <div class="py-1">
+                  <div class="row align-items-center">
+                     <div class="col-2">
+                        <div class="mb-0 site-logo">
+                           <a href="/index">Card<strong class="font-weight-bold">Fit</strong>
+                           </a>
+                        </div>
+                     </div>
+                     <div class="col-10">
+                        <nav class="site-navigation text-right" role="navigation">
+                           <div class="container">
+                              <div class="d-inline-block d-lg-none ml-md-0 mr-auto py-3">
+                                 <a href="#"
+                                    class="site-menu-toggle js-menu-toggle text-black"><span
+                                    class="icon-menu h3"></span></a>
+                              </div>
 
-										<ul class="site-menu js-clone-nav d-none d-lg-block">
-											<li><a href="/insight">인사이트</a></li>
-											<li><a href="/myCardBenefit">내 카드 혜택보기</a></li>
-											<li class="has-children"><a>카드 추천받기</a>
-												<ul class="dropdown arrow-top">
-													<li><a href="/keyword">키워드로 추천받기</a></li>
-													<li><a href="/option">옵션으로 추천받기</a></li>
-												</ul></li>
-											<li><a href="contact.html">문의하기</a></li>
-										</ul>
-									</div>
-								</nav>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+                              <ul class="site-menu js-clone-nav d-none d-lg-block">
+                                 <li><a href="/insight">인사이트</a></li>
+                                 <li><a href="/myCardBenefit">내 카드 혜택보기</a></li>
+                                 <li class="has-children"><a>카드 추천받기</a>
+                                    <ul class="dropdown arrow-top">
+                                       <li><a href="/keyword">키워드로 추천받기</a></li>
+                                       <li><a href="/option">옵션으로 추천받기</a></li>
+                                    </ul></li>
+                                 <li><a href="contact.html">문의하기</a></li>
+                              </ul>
+                           </div>
+                        </nav>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
   
     <div style="height: 113px;"></div>
 
@@ -127,21 +167,21 @@
   <br><br><br>
   
   
-      <div class="container text-center">
-  <table class="studentInfo">
+      <div  class="container text-center">
+  <table id="mydata" class="studentInfo">
         <tbody><tr>
-            <td class="header" colspan="6">STUDENTS MARK SHEET</td>
+            <td class="header" colspan="6">체크박스 조회 횟수</td>
         </tr>
         <tr class="mainRow">
             <td>연령/성별</td>
             <td>영화</td>
-			<td>카페</td>
-			<td>통신사</td>
-			<td>대중교통</td>
-			<td>쇼핑</td>
-			<td>온라인쇼핑</td>
-			<td>외식</td>
-			<td>기타</td>
+         <td>카페</td>
+         <td>통신사</td>
+         <td>대중교통</td>
+         <td>쇼핑</td>
+         <td>온라인쇼핑</td>
+         <td>외식</td>
+         <td>기타</td>
         </tr>
         <tr class="altRow">
             <td>20대 남성</td>
@@ -152,7 +192,7 @@
             <td>${data[0].onshop}</td>
             <td>${data[0].offshop}</td>
             <td>${data[0].food}</td>
-  	        <td>${data[0].others}</td>  
+             <td>${data[0].others}</td>  
         </tr>
         <tr>
             <td>30대 남성</td>
@@ -163,7 +203,7 @@
             <td>${data[1].onshop}</td>
             <td>${data[1].offshop}</td>
             <td>${data[1].food}</td>
-  	        <td>${data[1].others}</td>  
+             <td>${data[1].others}</td>  
         </tr>
         <tr>
             <td>40대 남성</td>
@@ -174,7 +214,7 @@
             <td>${data[2].onshop}</td>
             <td>${data[2].offshop}</td>
             <td>${data[2].food}</td>
-  	        <td>${data[2].others}</td>  
+             <td>${data[2].others}</td>  
         </tr>
         <tr>
             <td>20대 여성</td>
@@ -185,7 +225,7 @@
             <td>${data[3].onshop}</td>
             <td>${data[3].offshop}</td>
             <td>${data[3].food}</td>
-  	        <td>${data[3].others}</td>  
+             <td>${data[3].others}</td>  
         </tr>
         <tr>
             <td>30대 여성</td>
@@ -196,7 +236,7 @@
             <td>${data[4].onshop}</td>
             <td>${data[4].offshop}</td>
             <td>${data[4].food}</td>
-  	        <td>${data[4].others}</td>  
+             <td>${data[4].others}</td>  
         </tr>        
         <tr>
             <td>40대 여성</td>
@@ -207,15 +247,24 @@
             <td>${data[5].onshop}</td>
             <td>${data[5].offshop}</td>
             <td>${data[5].food}</td>
-  	        <td>${data[5].others}</td>  
+             <td>${data[5].others}</td>  
         </tr>
     </tbody>
     </table>
+  <br><br>
   
-  
- 	<button onclick="location.href='/histogram'">히스토그램 보기</button>
-  
+    <button onclick="histogram()"> 전체 히스토그램 보기</button>
+    <button onclick="Genderhistogram()"> 성별 히스토그램 보기</button>
+    <button onclick="Agehistogram()"> 연령별 히스토그램 보기</button>
+  <br><br>
+      <p id="printhistogram"></p>  
         </div>
+        
+        
+        
+        
+      
+      
   <br><br><br>
 
 

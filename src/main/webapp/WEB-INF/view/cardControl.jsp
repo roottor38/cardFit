@@ -143,7 +143,7 @@
          
         <table frame="void">
 	     <td>
-	     <img src="images/${card.bankname}${card.cardname}.jpg" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+	     <img src="images/${card.bankname}${card.cardname}.png" width="350" height="200">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	     </td>
          <td>
          
@@ -161,8 +161,8 @@
             
             <tr>
                 <td>이용조건</td>
-                <td colspan="2">                <c:if test="${card.benefit.condition != 'null'}">
-                ${card.benefit.condition}<br>
+                <td colspan="2">                <c:if test="${card.condition != 'null' && card.condition != null }">
+                ${card.condition}<br>
                 </c:if></td>
             </tr>
             <tr>
@@ -170,28 +170,28 @@
                 <td rowspan="18">혜택 </td>
                 <tr>
                 <td colspan="2">
-                <c:if test="${card.benefit.movie != 'null'}">
+                <c:if test="${card.benefit.movie != 'null' && card.benefit.movie != null}">
                 ${card.benefit.movie}<br>
                 </c:if>
-                <c:if test="${card.benefit.cafe != 'null'}">
+                <c:if test="${card.benefit.cafe != 'null' && card.benefit.cafe != null}">
                 ${card.benefit.cafe}<br>
                 </c:if>
-                <c:if test="${card.benefit.offshop != 'null'}">
+                <c:if test="${card.benefit.offshop != 'null' && card.benefit.offshop != null}">
                 ${card.benefit.offshop}<br>
                 </c:if>
-                <c:if test="${card.benefit.onshop != 'null'}">
+                <c:if test="${card.benefit.onshop != 'null' && card.benefit.onshop != null}">
                 ${card.benefit.onshop}<br>
                 </c:if>
-                <c:if test="${card.benefit.telecom != 'null'}">
+                <c:if test="${card.benefit.telecom != 'null' && card.benefit.telecom != null}">
                 ${card.benefit.telecom}<br>
                 </c:if>
-                <c:if test="${card.benefit.transportation != 'null'}">
+                <c:if test="${card.benefit.transportation != 'null' && card.benefit.transportation != null}">
                 ${card.benefit.transportation}<br>
                 </c:if>
-                <c:if test="${card.benefit.food != 'null'}">
+                <c:if test="${card.benefit.food != 'null' && card.benefit.food != null}">
                 ${card.benefit.food}<br>
                 </c:if>
-                <c:if test="${card.benefit.others != 'null'}">
+                <c:if test="${card.benefit.others != 'null' && card.benefit.others != null}">
                 ${card.benefit.others}<br>
                 </c:if>
                 </td>

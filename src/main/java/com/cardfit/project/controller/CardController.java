@@ -40,7 +40,7 @@ import model.dto.Summation;
 @Controller
 @Component
 public class CardController {
-
+	
 	public CardController() {
 		System.out.println("*** Start CardController ***");
 	}
@@ -49,6 +49,13 @@ public class CardController {
 	@Autowired
 	private CardService service;
 	//-------------------- 서비스에서 수행되서온놈을 JSONArray로 바꿔서 프론트로 뿌려주는 놈-----------------
+	@RequestMapping("/test")
+	public JSONArray test() {
+		return service.descCard();
+	}
+	
+	
+	
 	
 	@RequestMapping("/option")
 	public String option() {
@@ -106,7 +113,7 @@ public class CardController {
 		
 		try {
 			boolean countResult = CardDBService.updateCount(DBterm,name);
-			JSONArray result = service.checkSearch(term);
+			JSONArray result = service.checkSearch(term, name);
 			model.addAttribute("card", result);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -121,11 +128,13 @@ public class CardController {
 	}
 	
 	@PostMapping("/keyword")
-	public String keyword(@RequestParam(value = "search") String search, Model model) {
+	public String keyword(@RequestParam(value = "search") String search, Model model, HttpSession session) {
 		if (search == null || search.equals("") || search.length() == 0) {
 			return "keyword";
 		} else {
-			JSONArray result = service.keywordSearch(search);
+			System.out.println(session.getAttribute("customer"));
+			String user = ((Customer)session.getAttribute("customer")).getAge()+((Customer)session.getAttribute("customer")).getGender();
+			JSONArray result = service.keywordSearch(user, search);
 			model.addAttribute("card", result);
 		}
 		return "keyword";
@@ -134,7 +143,6 @@ public class CardController {
 	@PostMapping("/index")
 	public String index(@RequestParam(value = "gender") String gender,
 		@RequestParam(value = "age") String age, HttpSession session) {
-		System.out.println("호출됏으면");
 		Customer customer = new Customer(gender, Long.valueOf(age));
 		session.setAttribute("customer", customer);
 		return "index";
@@ -148,14 +156,13 @@ public class CardController {
 	
 	@PostMapping("/cardControl")
 	public String cardControl(@RequestParam(value = "cardname") String cardname, Model model) {
-		JSONArray result = service.cardNameSearch("cardname", cardname);
+		JSONArray result = service.cardNameSearch(cardname);
 		model.addAttribute("card", result);
 		return "cardControl";
 	}
 	
 	@RequestMapping("/myCardBenefit")
 	public String myCardBenefit() {
-		System.out.println("페이지 이동");
 		return "myCardBenefit";
 	}
 	
@@ -198,18 +205,6 @@ public class CardController {
             System.out.println(5);
             connection.close();
 
-//            BufferedReader reader = new BufferedReader(
-//                    new FileReader("C:\\Users\\Playdata\\Document\\histogram.png"));
-//            BufferedWriter writer = new BufferedWriter(
-//                    new OutputStreamWriter(new FileOutputStream("C:\\0.encore\\09.Spring\\step13_cardFit\\src\\main\\webapp\\WEB-INF\\view\\histogram.jsp"), "UTF-8"));
-//            String s = null;
-//            writer.write( "<%@ page contentType=\"text/html;charset=UTF-8\"%>");
-//            while ((s = reader.readLine()) != null) {
-//                writer.write(s);
-//                writer.newLine();
-//            }
-//            
-//            FileCopyUtils.copy(reader, writer);
             view.addObject("viewPage", "histogram.jsp");
             
         } catch (Exception e) {
@@ -236,8 +231,8 @@ public class CardController {
 		if (cardname == null || cardname.length() == 0 || cardname.equals("")) {
 			return "myCardBenefit";
 		} else {
-			JSONArray result = service.cardNameSearch("cardname", cardname);
-			model.addAttribute("card", result);
+			String user = ((Customer)session.getAttribute("customer")).getAge()+((Customer)session.getAttribute("customer")).getGender();
+			model.addAttribute("card", service.cardNameSearch(cardname, user));
 			return "myCardBenefit";
 		}
 	}
@@ -264,7 +259,7 @@ public class CardController {
 		if (!address.isEmpty()) {
 			try {
 				BufferedImage bImageFromConvert = ImageIO.read(new ByteArrayInputStream(address.getBytes()));
-				ImageIO.write(bImageFromConvert, "png",  new File("src\\main\\webapp\\images\\"+bankname+cardname+".jpg"));
+				ImageIO.write(bImageFromConvert, "png",  new File("src\\main\\webapp\\images\\"+bankname+cardname+".png"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -304,7 +299,7 @@ public class CardController {
 	@RequestMapping("/updateCard/{cardname}")
 	public String updateCard(@PathVariable(value = "cardname") String cardname, Model model) {
 		//카드 수정을 위한 은행명하고 카드명으로 값 검색 로직
-		JSONArray result = service.cardNameSearch("cardname", cardname);
+		JSONArray result = service.cardNameSearch(cardname);
 		model.addAttribute("card", result);
 		return "updateCard";
 	}
@@ -321,7 +316,6 @@ public class CardController {
 			@RequestParam(value = "onshop", required=false) String onshop,
 			@RequestParam(value = "food", required=false) String food,
 			@RequestParam(value = "others", required=false) String others) {
-		
 		if(condition.length()==0) {
 			condition=null;
 		}
@@ -349,7 +343,7 @@ public class CardController {
 		if(others.length()==0) {
 			others=null;
 		}
-		boolean result = service.updateCard(cardname, bankname, condition, movie, cafe, transportation, telecom, offshop, onshop, food, others);
+		service.updateCard(cardname, bankname, condition, movie, cafe, transportation, telecom, offshop, onshop, food, others);
 		return "redirect:/admin.html";
 	}
 	
