@@ -13,15 +13,14 @@ EncoreProjecct
 
 
 ## 정책
-### crawling 정책
- - 4개의 커뮤니티을 crawling 함
- - 실시간 crawling
- - crawling한 데이터를 flask를 사용하여 logstash로 보냄
- - logstash에서 data를 Elasticsearch로 보냄
+### 카드 검색 정책
+ - 완전하지 않은 이름을 검색하여도 표시 되어야 한다.
 
-### 분석 기간 정책
- - 사용자가 분석 기간을 정할 수 있어야 함
- - 모든 분석 데이터가 사용자가 정한 기간내로 나타나야함
+### 혜택 검색 정책
+ - 완전하지 않은 이름을 검색하여도 표시 되어야 한다.
+
+### 카드 추척 정책
+ - 사용자가 선택한 혜택을 기준으로 추천이 이루어져햐 한다.
 
 ### 사용한 기술
       - Spring boot
@@ -29,15 +28,7 @@ EncoreProjecct
       - Css
       - Axios
       - ELK stack(Elasticsearch, Logstash, Kibana)
-      - Python selenium
-      - Beautifulsoup
-      - Pandas
-      - Deep Learning
-      - konlpy
-      - nltk
-      - Docker compose
-      - DNS
+      - R
       - CentOs 7
-      - Jupyter Notebook
       - maven
 
